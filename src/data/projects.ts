@@ -37,6 +37,7 @@ export type Project = {
   summary: string;
   contributionLead: string;
   role: string[];
+  showContribution?: boolean;
   problem?: { label: string; title: string };
   sections: ProjectSection[];
   metrics?: Metric[];
@@ -603,24 +604,17 @@ const projectEntries: Project[] = [
     kind: 'engineering',
     category: 'Autonomous Driving Systems',
     featured: false,
-    summary: 'Henes T8 Sports 기반 실차 플랫폼을 구성하고, Dual-antenna RTK GNSS로 차량 위치와 heading을 확보해 직접 기록한 전역경로를 자체 RouteFollower와 Pure Pursuit로 추종한 프로젝트다. 초기 경로가 불필요하게 굴곡지는 문제를 확인해 cubic spline 기반 smoothing으로 reference route를 개선했으며, 현재는 YOLO 기반 장애물 인지를 확장하고 있다.',
-    contributionLead: 'Real-vehicle platform · Dual RTK GNSS · Global route driving · Route smoothing',
-    role: [
-      'Henes T8 Sports 기반 실차 플랫폼을 구성하고 모터 드라이버와 배선을 연결했다.',
-      'NUCLEO-H743ZI2를 하위 제어기로 사용해 상위 Linux/ROS2 시스템과 조향·모터 제어 역할을 분리했다.',
-      'Dual RTK GNSS 기반 위치·heading을 이용해 전역경로 주행 구조를 구성했다.',
-      'RTK waypoint와 주행 경로를 기록하고 smoothing을 적용해 reference route를 구성했다.',
-      '자체 RouteFollower와 Pure Pursuit를 실차 경로 추종에 적용했으며, 현재 YOLO 장애물 인지 학습을 진행하고 있다.',
-    ],
-    problem: { label: 'Project Goal', title: 'Henes T8 Sports를 기반으로 실제 자율주행 차량을 구성하고, Dual-antenna RTK GNSS로 차량의 위치와 heading을 확보한 뒤, 직접 기록한 전역경로를 실제 차량이 안정적으로 추종하도록 구현하는 것을 목표로 했다.' },
+    summary: 'Henes T8 Sports 실차 플랫폼에 UM982 dual-antenna RTK GNSS와 NUCLEO 기반 저수준 제어를 통합하고, fixed ENU 좌표계에서 기록한 global route를 RouteFollower와 Pure Pursuit로 추종한 프로젝트다. 기록 waypoint의 불규칙한 경로와 steering 흔들림을 natural cubic spline smoothing과 continuous tracking으로 개선했으며, 실차 route following을 확인한 뒤 현재는 YOLO 기반 장애물 인지를 추가하고 있다.',
+    contributionLead: '',
+    role: [],
+    showContribution: false,
+    problem: { label: 'Project Goal', title: '실제 차량에서 위치·heading·speed를 이용해 global route를 기록하고, 기록 경로를 안정적으로 추종하는 자율주행 시스템을 구현하는 것을 목표로 했다.' },
     sections: [
-      { label: 'Vehicle Platform', title: 'Henes T8 Sports 기반 실차·상하위 제어 구조', items: ['Henes T8 Sports 기반 실차 플랫폼을 구성하고 모터 드라이버와 배선을 연결했다.', 'Linux/ROS2 상위 시스템에서 주행 경로와 제어 명령을 생성하고, NUCLEO-H743ZI2에서 steering angle PID, PWM output, watchdog과 emergency/safety protection을 담당하도록 역할을 분리했다.'] },
-      { label: 'Dual RTK GNSS', title: '전역 위치와 heading을 확보하는 Dual-antenna RTK', items: ['UM982 Dual-antenna RTK GNSS로 차량의 위치·heading·speed를 확보했다. 두 안테나를 사용해 차량이 바라보는 방향을 함께 얻을 수 있도록 했다.', 'GNSS 위도·경도 좌표를 대회장 기준 local x-y 좌표로 변환하고, 안테나 위치와 차량 기준점 사이의 차이를 보정해 전역경로 추종에 사용했다.'] },
-      { label: 'Route Recording', title: 'RTK 기반 reference route 구성', items: ['정지 상태에서 RTK waypoint를 직접 기록하고, 차량을 이동시키며 일정 간격으로 실제 주행 경로를 기록했다.', '기록된 waypoint와 route를 차량이 추종할 reference route로 구성해 관리했다.'] },
-      { label: 'Route Smoothing', title: '불필요한 굴곡을 줄인 offline smoothing', items: ['초기 전역경로가 waypoint 사이에서 불필요하게 굴곡지는 문제를 확인해 단순히 Pure Pursuit 파라미터만 조절하는 것이 아니라 reference path 자체를 개선할 필요가 있다고 판단했다.', 'Natural cubic spline 기반 offline smoothing을 적용해 보다 연속적이고 부드러운 reference route를 생성했다.'] },
-      { label: 'Route Tracking', title: '자체 RouteFollower와 Pure Pursuit 기반 연속 추종', items: ['차량의 현재 GNSS 위치를 reference route에 투영하고 경로 진행도를 연속적으로 관리했다.', '경로 앞쪽의 virtual target을 lookahead로 선택해 Pure Pursuit로 smooth route 전체를 추종하도록 자체 RouteFollower를 구현·적용했다.'] },
-      { label: 'Real-Vehicle Validation', title: 'RTK 기록 경로의 실차 주행 확인', tone: 'result', items: ['RTK GNSS로 기록한 전역경로를 smoothing한 뒤 실제 차량이 해당 route를 따라 주행하는 것을 확인했다.', 'Dual GNSS 기반 위치와 heading을 전역경로 추종에 사용하고, 실차에서 route tracking 동작을 검증했다.'] },
-      { label: 'Current Work', title: 'YOLO 장애물 인지와 차량 통합을 진행 중이다', items: ['현재는 전역경로 주행 이후 단계로 카메라 기반 YOLO 장애물 인지를 학습하고 있다.', 'Mission Manager에는 신호, 장애물, 언덕과 주차 등의 상태 구조가 있지만 모든 mission이 실차에서 완성된 것은 아니다.', '인지 결과를 Mission Manager와 실제 차량 주행 시스템에 통합하는 작업을 진행하고 있다.'] },
+      { label: 'Vehicle System', title: 'Henes T8 Sports에 GNSS·저수준 제어·ROS 2 통합', items: ['Henes T8 Sports 실차 플랫폼을 구성하고 NUCLEO-H743ZI2 기반 저수준 제어와 Linux/ROS 2 상위 시스템을 연결했다.', 'UM982 dual-antenna RTK GNSS에서 position, heading, speed를 처리하고 이를 fixed ENU 좌표계로 변환해 차량 주행에 사용했다.'] },
+      { label: 'Route Recording', title: '실제 차량으로 global route 기록', items: ['RTK GNSS를 이용해 실제 차량의 global route를 기록하고, 기록한 waypoint와 route를 reference path로 관리했다.', '초기에는 기록 waypoint를 그대로 따라가면서 path가 불규칙해지고 steering이 흔들리는 문제를 확인했다.'] },
+      { label: 'Route Improvement', title: 'Spline smoothing과 continuous tracking으로 경로 개선', items: ['문제를 Pure Pursuit parameter만으로 해결하지 않고, natural cubic spline을 적용해 reference route 자체를 연속적이고 부드럽게 만들었다.', '현재 차량 위치를 route에 projection하고 진행 방향의 virtual target/look-ahead point를 선택하는 RouteFollower를 구성했다.', '약 20 Hz control loop에서 Pure Pursuit 기반 continuous tracking을 적용해 smooth route를 연속적으로 추종하도록 구현·튜닝했다.'] },
+      { label: 'Real-Vehicle Validation', title: '실차 route following 검증', tone: 'result', items: ['smoothing한 RTK global route를 실제 차량이 추종하는 것을 확인했다.', 'Dual RTK GNSS 기반 위치·heading과 RouteFollower, Pure Pursuit를 연결해 실제 차량에서 continuous route tracking을 검증했다.'] },
+      { label: 'Current Work', title: 'YOLO 기반 장애물 인지를 추가 개발 중', items: ['현재는 global route following에 이어 YOLO 기반 장애물 인지를 추가하고 있다.'] },
     ],
     tags: ['Henes T8 Sports', 'Dual RTK GNSS', 'Global Route', 'Pure Pursuit', 'ROS2'],
     image: 'media/projects/hl-ku-drive-feature.jpg',
