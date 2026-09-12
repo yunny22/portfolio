@@ -299,19 +299,27 @@ const projectEntries: Project[] = [
     kind: 'research',
     category: 'Learning-based Autonomous Driving',
     featured: true,
-    summary: '예선 Imitation Learning의 고속 oscillation을 개선하기 위해 Reinforcement Learning과 Gazebo 기반 Sim-to-Real을 시도하고, 고속 주행에서 남은 물리적 차이를 분석한 연구 프로젝트다.',
-    contributionLead: 'Sim-to-Real pipeline · RL exploration · Real-vehicle validation',
+    summary: 'Taeyun Kim이 단독으로 수행한 연구 프로젝트로, 예선 Imitation Learning의 고속 oscillation을 개선하기 위해 Reinforcement Learning과 Gazebo 기반 Sim-to-Real을 시도하고 고속 주행에서 남은 물리적 차이를 분석했다.',
+    contributionLead: 'Individual Project · Sim-to-Real pipeline · Offline RL · Real-vehicle validation',
     role: [
-      '예선에서 확인한 고속 oscillation 문제를 분석하고 이를 개선하기 위한 Reinforcement Learning 방향을 설계했다.',
-      '대회 환경을 모사한 Gazebo simulation과 Canonical BEV 기반 학습 pipeline을 구성했다.',
-      'Behavioral Cloning과 temporal TD3+BC 실험을 수행하고 실차 저속 주행을 검증했다.',
-      '실차 측정과 simulation 보정을 반복하며 고속 Sim-to-Real gap을 분석했다.',
+      'Canonical perception, camera preprocessing, dataset/transition 생성과 Behavioral Cloning baseline을 포함한 전체 연구 방향을 단독으로 설계·구현했다.',
+      'camera-speed policy와 offline TD3+BC actor/critic 학습, reward·termination·replay·temporal input 실험을 구성했다.',
+      'Gazebo closed-loop 환경·정책 평가와 simulation data collection을 수행하고, 실차 저속 policy 적용까지 검증했다.',
+      '실차 sensor/control delay와 차량 거동을 측정해 simulation 보정과 Sim-to-Real transfer를 진행하고 고속 gap을 분석했다.',
     ],
     problem: {
       label: 'Project Goal',
       title: '예선 Imitation Learning에서 고속 주행 시 발생한 좌우 oscillation을 개선하기 위해 Reinforcement Learning을 시도하고, 반복 학습을 위한 simulation과 실차 이전 구조를 구축하는 것을 목표로 했다.',
     },
     sections: [
+      {
+        label: 'Individual Project',
+        title: '전체 Sim-to-Real 연구 pipeline을 단독으로 수행',
+        items: [
+          'Canonical perception과 Behavioral Cloning부터 offline TD3+BC, Gazebo 폐루프 평가, 실차 delay·차량 거동 측정과 simulation calibration까지 전체 연구 pipeline을 단독으로 설계하고 구현했다.',
+          '이 연구는 Team KAI의 국민대 본선 맥락에서 진행됐지만, 별도의 최종 대회 차량 시스템 전체를 개인 프로젝트로 주장하지는 않는다.',
+        ],
+      },
       {
         label: 'Why Simulation / Approach',
         title: '고속 oscillation 개선을 위해 학습 범위를 확장',
