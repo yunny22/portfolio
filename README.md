@@ -1,6 +1,6 @@
-# Taeyun Kim Autonomous Driving Research Portfolio
+# Taeyun Kim · Autonomous Driving Research Portfolio
 
-김태윤의 대학원 진학용 자율주행 연구 포트폴리오입니다. 학습 기반 자율주행, 경로 계획과 제어, Sim-to-Real, 실차 시스템 통합과 V2I End-to-End driving 프로젝트를 정리합니다.
+학습 기반 자율주행, Sim-to-Real, 실차 자율주행 및 V2I 협력주행 연구 경험을 정리한 포트폴리오입니다.
 
 이 사이트는 [Astro](https://astro.build/)로 만든 정적 웹사이트입니다. 프로젝트별 문제, 개인 기여, 구현 과정, 실험 결과와 한계를 이미지·영상 근거와 함께 보여줍니다.
 
