@@ -35,9 +35,6 @@ export type Project = {
   category: ProjectCategory;
   featured: boolean;
   summary: string;
-  contributionLead: string;
-  role: string[];
-  showContribution?: boolean;
   problem?: { label: string; title: string };
   sections: ProjectSection[];
   metrics?: Metric[];
@@ -62,14 +59,6 @@ const projectEntries: Project[] = [
     category: 'Foundation / Other Experience',
     featured: false,
     summary: 'Mbed 기반 제어기에 IR 차선 센서, Hall 속도 센서와 PSD 거리 센서를 연결하고, servo steering과 DC motor control을 통합해 차선 추종·속도 제어·장애물 정지를 수행하는 자율주행 모형차를 개발한 프로젝트다. 실제 차량을 제작·튜닝하면서 제한된 임베디드 환경의 제어 반응성과 센서 신뢰성 문제를 처음 경험했다.',
-    contributionLead: 'Mbed control · Sensor/actuator integration · Control optimization',
-    role: [
-      '수업에서 제공된 회로 구성을 바탕으로 power / sensor circuit을 납땜하고 차량 배선을 구성했다.',
-      'Mbed LPC1768에 IR, Hall, PSD 센서와 servo/DC motor actuator를 연결했다.',
-      'line following, speed control과 obstacle stop 기능을 하나의 주행 코드로 통합했다.',
-      '초기 PID speed control을 Hall sensor 기반의 단순한 motor output control로 변경하고, 기능 증가에 따른 control response 저하를 줄이기 위해 코드 구조와 실행 주기를 단순화했다.',
-      'PSD distance sensor의 간헐적인 측정 불안정 문제를 확인하고 주행 조건을 반복적으로 튜닝했다.',
-    ],
     problem: { label: 'Project Goal', title: '제공된 차량 플랫폼에 센서, 제어기와 구동부를 직접 조립·연결하고, Mbed에서 차선 추종·속도 제어와 장애물 정지를 통합해 실제 트랙을 자율주행하는 모형차를 구현하는 것을 목표로 했다.' },
     sections: [
       {
@@ -125,21 +114,13 @@ const projectEntries: Project[] = [
     slug: 'hybrid-path-planning',
     title: 'Learning- and Rule-based Hybrid Path Planning',
     shortTitle: 'Hybrid Path Planning',
-    eyebrow: 'Research · Planning & Learning',
+    eyebrow: 'Research · Planning & Learning · Team of 2',
     period: '2026.03 — 2026.06',
     status: 'Completed',
     kind: 'research',
     category: 'Learning-based Autonomous Driving',
     featured: true,
     summary: 'Imitation Learning의 부드러운 조향과 Rule-based 제어의 안정적인 상황 대응을 결합하기 위해, 학습 기반 경로 추종과 규칙 기반 장애물·신호 제어를 하나의 Hybrid 주행 시스템으로 통합한 프로젝트다.',
-    contributionLead: 'Team size 2 · Co-developer',
-    role: [
-      '2인 팀으로 Hybrid 시스템 전체 설계와 구현을 공동 수행했다.',
-      'Pure Pursuit expert 기반 데이터 수집 구조를 공동 구성했다.',
-      'Behavioral Cloning 학습과 주행 검증을 공동 수행했다.',
-      'IL과 Lattice Planner의 제어권 통합을 공동 수행했다.',
-      '다른 map에서 발견한 회피 실패와 제어 로직 분석을 공동 수행했다.',
-    ],
     problem: {
       label: 'Project Goal',
       title: '모방학습의 부드러운 조향과 Rule-based 방식의 안정적인 상황 대응을 결합한 Hybrid 주행 시스템을 구현하는 것을 목표로 했다.',
@@ -209,33 +190,17 @@ const projectEntries: Project[] = [
     category: 'Learning-based Autonomous Driving',
     featured: true,
     summary: 'Taeyun Kim이 직접 설계·구현한 Imitation Learning 주행 시스템으로, 사람이 직접 주행해 수집한 데이터로 직선·곡선에서 장애물·보행자 회피까지 학습 범위를 확장하고 폐루프 주행에서 control frequency와 데이터 구성이 미치는 영향을 확인한 프로젝트다.',
-    contributionLead: 'Individual system implementation · Team-supported high-speed data collection',
-    role: [
-      '전체 Imitation Learning 주행 시스템, camera/keyboard steering 데이터 수집, preprocessing, Behavioral Cloning 학습과 real-time inference pipeline을 직접 구성했다.',
-      '실차 steering control node와 learned steering, Rule-based mission logic, 최종 launch/driving stack을 통합했다.',
-      '폐루프 실차 주행을 반복 검증하고 실패 구간·데이터 분포·제어 주기와 차량 반응을 분석해 재수집과 재학습, 시스템 tuning을 수행했다.',
-      '대회 준비 후반 고속 주행용 추가 데이터 수집에서는 팀원들의 지원을 받았다.',
-    ],
     problem: {
       label: 'Project Goal',
       title: '이전 Hybrid 프로젝트에서 steer-only Imitation Learning의 가능성을 확인한 뒤, 사람이 직접 주행해 수집한 데이터를 이용해 직선·곡선 주행뿐 아니라 장애물·보행자 회피까지 학습 모델이 수행하도록 확장하는 것을 목표로 했다.',
     },
     sections: [
       {
-        label: 'Individual Implementation',
-        title: '전체 학습 기반 주행 시스템을 직접 설계·구현',
-        items: [
-          'camera와 keyboard steering label을 기록하는 구조부터 dataset preprocessing, Behavioral Cloning 학습, 실시간 inference와 실차 steering control까지 전체 주행 pipeline을 직접 구성했다.',
-          'learned steering을 신호등·어린이보호구역 등 Rule-based mission logic과 통합하고, 최종 예선용 launch와 driving stack을 구성했다.',
-          '대회 준비 후반에는 고속 주행 상황의 학습 데이터를 보완하기 위해 팀원들이 추가 데이터 수집을 지원했다.',
-        ],
-      },
-      {
         label: 'Approach',
         title: '사람이 직접 주행해 수집한 데이터를 학습에 사용',
         items: [
           '자이트론 자체 제작 시뮬레이션에서 camera image와 사람이 keyboard로 조작한 steering 값을 함께 수집했다.',
-          '사람이 직접 주행해 수집한 데이터를 학습 데이터로 사용해 Imitation Learning 모델을 학습했다.',
+          '수집 구조와 dataset preprocessing을 구성한 뒤, 사람이 직접 주행해 수집한 데이터를 사용해 Behavioral Cloning 모델을 학습하고 real-time inference로 연결했다.',
           '직선·곡선 주행과 장애물·보행자 회피는 학습 모델이 담당하도록 했다.',
           '신호등과 어린이보호구역처럼 명확한 정지나 속도 조절이 필요한 미션에서만 Rule-based logic이 개입하도록 구성했다.',
         ],
@@ -246,6 +211,7 @@ const projectEntries: Project[] = [
         items: [
           'Learning-based driving은 직선·곡선 주행과 장애물·보행자 회피를 담당했다.',
           'Rule-based intervention은 신호등과 어린이보호구역 등 명시적인 정지·속도 조절 미션을 담당했다.',
+          'learned steering과 mission logic, 최종 launch/driving stack을 통합해 폐루프 실차 주행으로 검증했다.',
         ],
       },
       {
@@ -262,7 +228,7 @@ const projectEntries: Project[] = [
         title: '실패 구간을 데이터로 보완하며 재학습',
         items: [
           '주행이 실패하는 구간을 반복해서 확인하고, 해당 상황의 학습 데이터를 다시 수집하거나 보완해 재학습했다.',
-          '여러 차례의 데이터 수집과 재학습을 거치며 모델 구조뿐 아니라 학습 데이터의 품질과 상황 분포가 실제 주행 성능에 큰 영향을 준다는 점을 경험했다.',
+          '여러 차례의 데이터 수집과 재학습을 거치며 모델 구조뿐 아니라 학습 데이터의 품질과 상황 분포가 실제 주행 성능에 큰 영향을 준다는 점을 경험했다. 고속 주행용 추가 데이터를 보완하는 과정에서는 팀의 지원을 받아 상황 범위를 확장했다.',
         ],
       },
       {
@@ -303,33 +269,18 @@ const projectEntries: Project[] = [
     slug: 'sim-to-real-driving',
     title: 'Kookmin Final – Reinforcement Learning & Sim-to-Real',
     shortTitle: 'Kookmin Final · Sim-to-Real',
-    eyebrow: 'Research · Reinforcement Learning & Sim-to-Real',
+    eyebrow: 'Research · Individual Project · Reinforcement Learning & Sim-to-Real',
     period: '2026.06 — 2026.08',
     status: 'Completed',
     kind: 'research',
     category: 'Learning-based Autonomous Driving',
     featured: true,
     summary: 'Taeyun Kim이 단독으로 수행한 연구 프로젝트로, 예선 Imitation Learning의 고속 oscillation을 개선하기 위해 Reinforcement Learning과 Gazebo 기반 Sim-to-Real을 시도하고 고속 주행에서 남은 물리적 차이를 분석했다.',
-    contributionLead: 'Individual Project · Sim-to-Real pipeline · Offline RL · Real-vehicle validation',
-    role: [
-      'Canonical perception, camera preprocessing, dataset/transition 생성과 Behavioral Cloning baseline을 포함한 전체 연구 방향을 단독으로 설계·구현했다.',
-      'camera-speed policy와 offline TD3+BC actor/critic 학습, reward·termination·replay·temporal input 실험을 구성했다.',
-      'Gazebo closed-loop 환경·정책 평가와 simulation data collection을 수행하고, 실차 저속 policy 적용까지 검증했다.',
-      '실차 sensor/control delay와 차량 거동을 측정해 simulation 보정과 Sim-to-Real transfer를 진행하고 고속 gap을 분석했다.',
-    ],
     problem: {
       label: 'Project Goal',
       title: '예선 Imitation Learning에서 고속 주행 시 발생한 좌우 oscillation을 개선하기 위해 Reinforcement Learning을 시도하고, 반복 학습을 위한 simulation과 실차 이전 구조를 구축하는 것을 목표로 했다.',
     },
     sections: [
-      {
-        label: 'Individual Project',
-        title: '전체 Sim-to-Real 연구 pipeline을 단독으로 수행',
-        items: [
-          'Canonical perception과 Behavioral Cloning부터 offline TD3+BC, Gazebo 폐루프 평가, 실차 delay·차량 거동 측정과 simulation calibration까지 전체 연구 pipeline을 단독으로 설계하고 구현했다.',
-          '이 연구는 Team KAI의 국민대 본선 맥락에서 진행됐지만, 별도의 최종 대회 차량 시스템 전체를 개인 프로젝트로 주장하지는 않는다.',
-        ],
-      },
       {
         label: 'Why Simulation / Approach',
         title: '고속 oscillation 개선을 위해 학습 범위를 확장',
@@ -397,14 +348,6 @@ const projectEntries: Project[] = [
     category: 'Autonomous Driving Systems',
     featured: false,
     summary: 'Sim-to-Real에서 확인한 원거리 경로 인지 한계를 바탕으로, Xbin yellow-centerline을 차량 좌표계의 metric path로 직접 변환하고 adaptive Stanley + Pure Pursuit 제어와 mission arbitration을 통합한 TeamKAI 본선 Rule-based 자율주행 시스템이다.',
-    contributionLead: 'Xbin lane path · Fused control · Mission arbitration · Vehicle integration',
-    role: [
-      '본선 자율주행 시스템의 전체 control architecture를 설계했다.',
-      'Xbin yellow-centerline 인지, 중앙선 점 추출과 차량 좌표계 direct metric path 변환을 구성했다.',
-      'Pure Pursuit와 Stanley를 결합한 adaptive fused controller를 구현·튜닝했다.',
-      'traffic-light 대응, YOLO+LiDAR 차량 회피·복귀, mission/lap 상태와 priority arbitration, 최종 차량 명령 흐름을 구현·통합하고 실차에서 조정했다.',
-      'Shortcut/W1과 cone 인지·주행은 다른 팀원이 담당했으며, 해당 command/event를 전체 시스템에 통합했다.',
-    ],
     problem: {
       label: 'Project Goal',
       title: 'Sim-to-Real 과정에서 원거리 경로 정보를 안정적으로 제공하기 어려웠던 한계를 바탕으로, 더 먼 yellow centerline을 직접 인지해 metric path로 변환하고 이를 본선용 Rule-based 차량 제어 구조에 통합하는 것을 목표로 했다.',
@@ -430,20 +373,11 @@ const projectEntries: Project[] = [
         ],
       },
       {
-        label: 'Team and Individual Scope',
-        title: '전체 차량 architecture와 개인·팀 subsystem의 경계',
-        items: [
-          'Xbin 차선 주행, metric path 변환, fused controller, traffic-light와 YOLO+LiDAR 차량 회피·복귀, mission/lap priority arbitration과 최종 차량 명령 통합은 직접 설계·구현·튜닝했다.',
-          'Shortcut/W1과 cone 인지·주행 알고리즘은 팀원이 담당했으며, 전체 본선 architecture에서는 해당 subsystem의 candidate와 event를 통합했다.',
-        ],
-      },
-      {
         label: 'Team Result',
         title: '최종 통합 시스템의 팀 결과',
         tone: 'result',
         items: [
           'TeamKAI 최종 main README에 기록된 2026년 8월 23일 3-lap 통합 완주는 팀 결과이다.',
-          '이 페이지는 개인 구현 범위와 팀이 담당한 subsystem을 구분하며, 팀 전체 결과를 개인 성과로 표현하지 않는다.',
         ],
       },
     ],
@@ -468,8 +402,6 @@ const projectEntries: Project[] = [
     category: 'Localization & Mapping',
     featured: false,
     summary: '국민대 대회에서 더 빠른 주행을 위한 안정적인 Localization을 목표로 LiDAR 지도 기반 위치 추정을 구현하고, 건국대와 국민대 환경에서 실제 차량으로 검증한 프로젝트다.',
-    contributionLead: 'LiDAR mapping · Localization · Real-vehicle validation',
-    role: ['slam_toolbox 기반 2D LiDAR 지도 생성과 실차 주행 검증을 수행했다.', '건국대와 국민대 환경의 성공·실패 차이를 지도–scan 정합 관점에서 분석했다.'],
     problem: { label: 'Project Goal', title: '국민대 대회에서 차량의 주행 속도를 높이기 위해 안정적인 위치 추정이 필요했고, 2D LiDAR 지도 기반 Localization을 실제 차량에 적용하는 것을 목표로 했다.' },
     sections: [
       { label: 'Approach / Validation', title: '지도 생성부터 실제 차량 적용까지', items: ['2D LiDAR로 지도를 생성하고 저장했다.', '저장 지도와 현재 LiDAR scan을 이용해 차량 위치를 추정하는 구조를 구성했다.', '먼저 건국대학교 공학관에서 지도 생성, Localization과 실제 차량 주행을 검증했다.', '이후 같은 구조를 국민대학교 주행 트랙에 적용했다.'] },
@@ -499,14 +431,6 @@ const projectEntries: Project[] = [
     category: 'Autonomous Driving Systems',
     featured: false,
     summary: '자작자동차 대회를 위해 전체 자율주행 Architecture를 설계하고, 한국교통안전공단 자동차안전연구원 시험로를 Gazebo에 구현해 GNSS 기반 전역경로 주행과 장애물·신호등 대응을 먼저 개발·검증한 뒤, 현재 실제 차량으로 이전해 테스트와 보정을 진행하고 있는 프로젝트다.',
-    contributionLead: 'Architecture design · Gazebo simulation · GNSS route · Real-vehicle transfer',
-    role: [
-      '자작자동차 대회를 위한 전체 자율주행 Architecture를 설계했다.',
-      '한국교통안전공단 자동차안전연구원 시험로를 Gazebo에 구현하고 대회 상황 통합 검증을 진행했다.',
-      'GNSS 기반 전역경로 주행 알고리즘을 설계했다.',
-      '장애물 회피와 신호등 등 mission을 전체 시스템과 통합했다.',
-      'simulation에서 개발한 알고리즘을 실차에 적용해 현재 테스트와 보정을 진행 중이다.',
-    ],
     problem: { label: 'Project Goal', title: '자작자동차 대회에 사용할 자율주행 시스템의 전체 Architecture를 설계하고, 실차가 완성되기 전 Gazebo에서 실제 대회 환경과 주행 알고리즘을 먼저 개발·검증한 뒤 이를 실제 차량에 적용하는 것을 목표로 했다.' },
     sections: [
       { label: 'System Architecture', title: '대회 차량을 위한 전체 자율주행 Architecture', items: ['GNSS 기반 차량 위치 정보, Global Route, Perception / Mission information, Decision / Planning과 Vehicle Control을 하나의 시스템 흐름으로 연결했다.', '전체 Architecture 안에 판단과 planning 구조를 배치해 인지된 상황이 최종 차량 제어로 이어지도록 설계했다.'] },
@@ -533,16 +457,10 @@ const projectEntries: Project[] = [
     category: 'Foundation / Other Experience',
     featured: false,
     summary: 'UGV waypoint 주행, UAV waypoint 비행, ArUco 인식과 UAV 이착륙을 팀원별로 나누어 개발한 뒤, 이들을 ROS2/PX4 기반 하나의 UAV–UGV 협력 mission으로 통합한 프로젝트다.',
-    contributionLead: 'UAV takeoff/landing · Mission integration · ROS2/PX4',
-    role: [
-      'UAV 이륙·착륙 기능을 구현하고 단독 동작을 검증했다.',
-      '팀원들이 각각 개발한 UGV waypoint 주행, UAV waypoint 비행, ArUco marker 인식 모듈을 하나의 ROS2/PX4 기반 mission 흐름으로 통합했다.',
-    ],
     problem: { label: 'Project Goal', title: '각 팀원이 독립적으로 개발한 UGV 주행, UAV 비행, ArUco 인식과 UAV 이착륙 기능을 하나의 협력 mission으로 연결해 UAV와 UGV가 순차적으로 임무를 수행하도록 통합하는 것을 목표로 했다.' },
     sections: [
-      { label: 'Team Development Structure', title: '기능을 나누어 독립적으로 개발·검증', items: ['자동차 담당은 waypoint를 생성·추출하고 UGV가 waypoint를 따라 주행하도록 구현했다.', '드론 담당은 UAV waypoint를 구성하고 waypoint를 따라 비행하도록 구현했다.', 'ArUco 담당은 marker 인식 기능을 구현하고 독립적으로 테스트했다.', 'UAV 이륙·착륙 기능은 별도로 구현하고 단독 동작을 검증했다.'] },
-      { label: 'System Integration', title: '독립적으로 검증한 기능을 하나의 mission sequence로 연결', items: ['각 기능을 먼저 독립적으로 개발·검증한 뒤, ROS2/PX4/Gazebo 기반 전체 mission 안에서 순서대로 동작하도록 연결했다.', 'UGV waypoint 주행 → UAV mission 시작 → UAV waypoint 비행 → ArUco marker 인식 → UAV 착륙 → mission 종료 흐름을 구성했다.', '서로 다른 팀 모듈을 하나의 협력 mission으로 묶어 UAV와 UGV가 순차적으로 임무를 수행하도록 통합했다.'] },
-      { label: 'Landing', title: '좌표 기반 착륙을 marker 정보로 보완', items: ['초기에는 UGV의 좌표만을 이용해 착륙 위치를 지정했지만, 좌표만으로는 실제 착륙 위치 정확도가 충분하지 않았다.', '이를 보완하기 위해 팀원이 구현한 ArUco marker 인식 결과를 착륙 과정에서 활용하도록 전체 mission에 통합했다.', 'UAV 이륙·착륙 기능 구현과 mission 연결을 담당했으며, ArUco 인식 알고리즘 자체는 팀원이 구현한 모듈을 사용했다.'] },
+      { label: 'Mission Development', title: '독립적으로 검증한 기능을 하나의 협력 mission으로 연결', items: ['UGV waypoint 주행, UAV waypoint 비행, ArUco marker 인식과 UAV 이륙·착륙 기능을 각각 검증한 뒤 ROS2/PX4/Gazebo 기반 mission으로 연결했다.', 'UGV waypoint 주행 → ArUco detection → UAV mission → UAV takeoff → waypoint exploration → UGV rendezvous → landing 순서로 UAV와 UGV가 협력하도록 구성했다.'] },
+      { label: 'Landing', title: '좌표 기반 착륙을 marker 정보로 보완', items: ['초기에는 UGV의 좌표만을 이용해 착륙 위치를 지정했지만, 좌표만으로는 실제 착륙 위치 정확도가 충분하지 않았다.', 'UAV 이륙·착륙과 mission 연결 과정에서 teammate Detection3DArray 기반 ArUco 결과를 landing target 선택과 NAV_LAND gate에 사용하도록 통합했다. ArUco detector 알고리즘 자체를 새로 구현한 것은 아니다.'] },
       { label: 'Result', title: 'Gazebo에서 협력 mission 통합 확인', tone: 'result', items: ['각 팀원이 독립적으로 개발한 기능을 하나의 협력 mission으로 통합했다.', 'Gazebo에서 UAV와 UGV가 연결된 전체 mission의 동작을 확인했다.'] },
     ],
     tags: ['PX4', 'ROS2', 'Gazebo', 'UAV–UGV', 'Mission Integration'],
@@ -564,14 +482,6 @@ const projectEntries: Project[] = [
     category: 'Autonomous Driving Systems',
     featured: false,
     summary: '국민대 자율주차 대회에서 제공된 정적 지도 위에 31개의 waypoint를 직접 정의하고, Nav2의 SmacPlannerHybrid와 MPPI Ackermann controller, AMCL Localization을 이용해 자율주차 mission을 구성한 프로젝트다. Gazebo에서는 전체 mission을 완료했지만, 실제 대회장에서는 Localization 불안정과 환경 차이의 영향을 경험했다.',
-    contributionLead: 'Waypoint mission · Nav2 integration · Localization validation',
-    role: [
-      '31개의 waypoint와 goal pose를 직접 정의했다.',
-      'Nav2 기반 주차 mission을 구성했다.',
-      'SmacPlannerHybrid, Reeds–Shepp와 MPPI Ackermann 설정 및 통합을 수행했다.',
-      'VESC + IMU odometry와 AMCL Localization 기반 주행을 구성했다.',
-      'Gazebo에서 전체 mission을 검증하고 실제 대회장 주행 실패 원인을 분석했다.',
-    ],
     problem: { label: 'Project Goal', title: '국민대학교 자율주차 대회에서 제공된 정적 지도를 기반으로 주차 mission을 수행하기 위한 waypoint를 직접 정의하고, Nav2가 waypoint 사이의 경로를 생성·추종하도록 구성해 제한 시간 안에 자율주차 mission을 완료하는 것을 목표로 했다.' },
     sections: [
       { label: 'Waypoint / Mission Structure', title: '31개의 waypoint로 주차 mission 구성', items: ['대회에서 제공된 정적 지도 위에 31개의 주행 목표 waypoint와 goal pose를 직접 정의했다.', '각 waypoint는 연속 trajectory가 아니라 주행·조향·전후진 전환을 위한 mission 목표로 사용했다.', 'mission manager가 각 goal pose를 Nav2 NavigateToPose action으로 순서대로 전달해 다음 목표까지 이동하도록 구성했다.'] },
@@ -605,9 +515,6 @@ const projectEntries: Project[] = [
     category: 'Autonomous Driving Systems',
     featured: false,
     summary: 'Henes T8 Sports 실차 플랫폼에 UM982 dual-antenna RTK GNSS와 NUCLEO 기반 저수준 제어를 통합하고, fixed ENU 좌표계에서 기록한 global route를 RouteFollower와 Pure Pursuit로 추종한 프로젝트다. 기록 waypoint의 불규칙한 경로와 steering 흔들림을 natural cubic spline smoothing과 continuous tracking으로 개선했으며, 실차 route following을 확인한 뒤 현재는 YOLO 기반 장애물 인지를 추가하고 있다.',
-    contributionLead: '',
-    role: [],
-    showContribution: false,
     problem: { label: 'Project Goal', title: '실제 차량에서 위치·heading·speed를 이용해 global route를 기록하고, 기록 경로를 안정적으로 추종하는 자율주행 시스템을 구현하는 것을 목표로 했다.' },
     sections: [
       { label: 'Vehicle System', title: 'Henes T8 Sports에 GNSS·저수준 제어·ROS 2 통합', items: ['Henes T8 Sports 실차 플랫폼을 구성하고 NUCLEO-H743ZI2 기반 저수준 제어와 Linux/ROS 2 상위 시스템을 연결했다.', 'UM982 dual-antenna RTK GNSS에서 position, heading, speed를 처리하고 이를 fixed ENU 좌표계로 변환해 차량 주행에 사용했다.'] },
@@ -639,13 +546,6 @@ const projectEntries: Project[] = [
     category: 'Learning-based Autonomous Driving',
     featured: true,
     summary: '차량 전방 ego camera에 보이지 않는 사각지대 보행자를 infrastructure camera가 검출하고 위치를 추정한 뒤, 차량 기준의 상대 위치·거리 정보로 변환해 V2I로 전달하고 ego image와 함께 사용하는 V2I-assisted End-to-End driving 구조를 설계하고 있다.',
-    contributionLead: 'Problem definition · V2I system design · Experiment design',
-    role: [
-      'ego camera에서 보이지 않는 보행자 상황을 문제 시나리오로 정의했다.',
-      'Ego-camera-only baseline과 V2I-assisted E2E 비교 구조를 정의했다.',
-      'infrastructure camera가 보행자를 검출하고 위치를 추정한 뒤, 차량 기준의 상대 위치·거리 정보로 변환해 전달하는 입력 구조를 설계하고 있다.',
-      '동일 시나리오에서 collision, minimum distance와 braking response timing을 비교할 평가 계획을 설계했다.',
-    ],
     problem: { label: 'Research Question', title: 'Can V2I pedestrian position and distance information enable an earlier safety response than ego-camera-only end-to-end driving?' },
     sections: [
       { label: 'Problem Scenario', title: '가려진 어린이의 갑작스러운 진입', wide: true, items: ['주·정차 차량 때문에 어린이가 ego camera에 보이지 않지만, infrastructure camera에서는 해당 어린이를 먼저 관측할 수 있는 상황을 다룬다.', '어린이가 차량과 가까운 위치에서 도로로 진입할수록 ego-camera-only E2E의 대응 시간이 줄어드는 조건을 평가한다.', '같은 조건에서 V2I-assisted E2E가 얼마나 더 이르게 감속·정지할 수 있는지 비교할 계획이다.'] },

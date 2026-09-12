@@ -72,16 +72,6 @@ const kindLabels = {
           </aside>
 
           <div class="research-panel">
-            {project.showContribution !== false && (
-              <section class="contribution-panel reveal">
-                <header>
-                  <p class="panel-label">My Contribution</p>
-                  <strong>{project.contributionLead}</strong>
-                </header>
-                <ul>{project.role.map((item) => <li>{item}</li>)}</ul>
-              </section>
-            )}
-
             {project.problem && (
               <section class="question-panel reveal">
                 <p class="panel-label">{project.problem.label}</p>
