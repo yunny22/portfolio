@@ -1,0 +1,69 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props { project: Project; index?: number; }
+const { project, index = 0 } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const image = project.image ? `${base}${project.image}` : undefined;
+const statusClass = `status status--${project.status.replaceAll(' ', '-')}`;
+const statusLabels = { Completed: '완료', Ongoing: '진행 중' } as const;
+---
+
+<article class:list={['project-row', 'reveal', `accent-${project.accent}`]} style={`--delay:${(index % 4) * 45}ms`}>
+  <a class:list={['card-link', !image && 'card-link--text-only']} href={`${base}projects/${project.slug}/`} aria-label={`${project.shortTitle} 자세히 보기`}>
+    <div class="project-index"><span>Project</span><strong>{String(project.order).padStart(2, '0')}</strong></div>
+    <div class="card-body">
+      <div class="card-meta"><span class={statusClass}>{statusLabels[project.status]}</span><span class="mono">{project.period}</span></div>
+      <h3>{project.shortTitle}</h3>
+      <p>{project.summary}</p>
+      <ul class="tag-list">{project.tags.slice(0, 4).map((tag) => <li class="tag">{tag}</li>)}</ul>
+      <span class="view-project mono">View Project →</span>
+    </div>
+    {image && (
+      <div class="card-visual">
+        <img src={image} alt={project.imageAlt ?? ''} loading="lazy" />
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </div>
+    )}
+    {!image && <span class="text-arrow" aria-hidden="true">↗</span>}
+  </a>
+</article>
+
+<style>
+  .project-row { --accent: var(--green); position: relative; border-top: 1px solid var(--line); background: transparent; transition: opacity .65s ease var(--delay), transform .65s cubic-bezier(.2,.7,.3,1) var(--delay), background .25s ease; }
+  .project-row:last-child { border-bottom: 1px solid var(--line); }
+  .project-row:hover { background: #edf5ef; }
+  .accent-cyan { --accent: var(--cyan); } .accent-orange { --accent: var(--orange); } .accent-violet { --accent: var(--violet); }
+  .card-link { display: grid; grid-template-columns: 6.5rem minmax(0,1fr) minmax(160px,190px); gap: clamp(1.5rem,4vw,3.5rem); align-items: center; min-height: 14rem; padding: 1.35rem 0; }
+  .card-link--text-only { position: relative; grid-template-columns: 6.5rem minmax(0,1fr); padding-right: 4.5rem; }
+  .project-index { align-self: start; padding-top: .55rem; color: var(--green-deep); font-family: 'IBM Plex Mono',monospace; }
+  .project-index span,.project-index strong { display: block; }
+  .project-index span { font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; }
+  .project-index strong { margin-top: .25rem; font-size: 2.1rem; line-height: 1; }
+  .card-visual { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--panel); border: 1px solid var(--line); }
+  .card-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.7,.3,1); }
+  .project-row:hover .card-visual img { transform: scale(1.045); }
+  .card-arrow { position: absolute; top: .75rem; right: .75rem; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: white; color: var(--green-deep); border: 1px solid var(--line); font-size: 1.1rem; font-weight: 800; transition: color .25s ease, background .25s ease, transform .25s ease; }
+  .project-row:hover .card-arrow { color: white; background: var(--green-deep); transform: rotate(8deg); }
+  .text-arrow { position: absolute; top: 50%; right: 1rem; display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border: 1px solid var(--line); border-radius: 50%; background: white; color: var(--green-deep); font-size: 1.2rem; font-weight: 800; transform: translateY(-50%); transition: color .25s ease, background .25s ease, transform .25s ease; }
+  .project-row:hover .text-arrow { color: white; background: var(--green-deep); transform: translateY(-50%) rotate(8deg); }
+  .card-body { min-width: 0; }
+  .card-meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); }
+  .card-meta .mono { font-size: .7rem; text-align: right; }
+  h3 { margin: .85rem 0 .65rem; font-size: clamp(1.65rem,2.5vw,2.3rem); }
+  p { max-width: 650px; margin-bottom: 1.15rem; color: var(--muted); font-size: .98rem; line-height: 1.75; }
+  .view-project { display: inline-block; margin-top: 1.2rem; color: var(--green-deep); transition: transform .2s ease; }
+  .project-row:hover .view-project { transform: translateX(4px); }
+  @media (max-width: 800px) {
+    .card-link { grid-template-columns: 4rem 1fr; gap: 1rem; padding: 2rem 0; }
+    .card-link--text-only { padding-right: 4.5rem; }
+    .card-visual { grid-column: 2; width: min(100%,320px); }
+  }
+  @media (max-width: 540px) {
+    .card-link { grid-template-columns: 1fr; }
+    .project-index,.card-body,.card-visual { grid-column: 1; }
+    .project-index { display: flex; gap: .5rem; align-items: baseline; }
+    .project-index strong { font-size: 1.4rem; }
+    .card-meta { align-items: flex-start; flex-direction: column; gap: .45rem; }
+  }
+</style>

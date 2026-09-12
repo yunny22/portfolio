@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+:root {
+  --ink: #17201b;
+  --ink-soft: #244335;
+  --paper: #f8f8f4;
+  --paper-strong: #ffffff;
+  --panel: #eef4ef;
+  --line: rgba(23, 32, 27, 0.13);
+  --muted: #59665f;
+  --green: #2f7d57;
+  --green-deep: #1e5c40;
+  --lime: #a9d9b9;
+  --cyan: #82cbb1;
+  --orange: #e79b63;
+  --violet: #9e91cf;
+  --max: 1120px;
+  --radius: 20px;
+  --shadow: 0 24px 70px rgba(32, 57, 45, 0.12);
+  color-scheme: light;
+  font-family: 'Pretendard Variable', Pretendard, 'Noto Sans KR', system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--paper);
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button, input { font: inherit; }
+
+::selection { color: var(--ink); background: var(--lime); }
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -5rem;
+  z-index: 100;
+  padding: .7rem 1rem;
+  background: var(--lime);
+  color: var(--ink);
+  border-radius: 999px;
+}
+
+.skip-link:focus { top: 1rem; }
+
+.shell { width: min(calc(100% - 2rem), var(--max)); margin-inline: auto; }
+.section { padding: clamp(5rem, 10vw, 8rem) 0; }
+.section--tight { padding: clamp(3rem, 7vw, 5rem) 0; }
+
+.eyebrow,
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .77rem;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.eyebrow { color: var(--green); }
+
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { line-height: 1.14; letter-spacing: -.035em; }
+h1 { font-size: clamp(3rem, 7vw, 5.7rem); }
+h2 { font-size: clamp(2.15rem, 4.5vw, 3.6rem); }
+h3 { font-size: clamp(1.3rem, 2vw, 1.75rem); }
+
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 440px);
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+
+.section-heading h2 { margin-bottom: 0; }
+.section-heading p { margin-bottom: .3rem; color: var(--muted); font-size: 1.02rem; line-height: 1.78; }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: .7rem 1.2rem;
+  border: 1px solid var(--ink);
+  border-radius: .8rem;
+  font-weight: 700;
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+
+.button:hover { transform: translateY(-2px); }
+.button--primary { background: var(--ink); color: white; }
+.button--accent { background: var(--green-deep); color: white; border-color: var(--green-deep); }
+.button--ghost { border-color: var(--line); color: var(--ink); background: rgba(255,255,255,.6); }
+
+.tag-list { display: flex; flex-wrap: wrap; gap: .45rem; padding: 0; margin: 0; list-style: none; }
+.tag {
+  padding: .35rem .65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: #4b5951;
+  font-size: .875rem;
+  line-height: 1.25;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .73rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.status::before { content: ''; width: .52rem; height: .52rem; border-radius: 50%; background: currentColor; }
+.status--Completed { color: #24704e; }
+.status--Ongoing { color: #a85f1b; }
+.status--Research-Proposal { color: #6756aa; }
+.status--Foundation { color: #617068; }
+
+.reveal { opacity: 1; transform: none; transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.3,1); }
+.js .reveal:not(.is-visible) { opacity: 0; transform: translateY(22px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 720px) {
+  .section-heading { grid-template-columns: 1fr; gap: .75rem; }
+  .section { padding: 4.5rem 0; }
+}

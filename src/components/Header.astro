@@ -1,0 +1,55 @@
+---
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
+const links = [
+  { href: base, label: 'Home', active: currentPath === base, external: false },
+  { href: `${base}projects/`, label: 'Projects', active: currentPath.startsWith(`${base}projects`), external: false },
+  { href: `${base}grades/`, label: 'Academic', active: currentPath.startsWith(`${base}grades`), external: false },
+  { href: 'https://github.com/yunny22', label: 'GitHub ↗', active: false, external: true },
+];
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href={base} aria-label="김태윤 포트폴리오 홈">
+      <span class="brand-mark" aria-hidden="true">TY</span>
+      <span>Taeyun Kim <small>Portfolio</small></span>
+    </a>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <nav id="primary-nav" aria-label="주 메뉴">
+      {links.map((link) => (
+        <a class:list={{ active: link.active }} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noreferrer' : undefined}>{link.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.menu-button');
+  const nav = document.querySelector<HTMLElement>('#primary-nav');
+  button?.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', String(!expanded));
+    nav?.classList.toggle('open', !expanded);
+  });
+</script>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); background: rgba(248,248,244,.9); color: var(--ink); backdrop-filter: blur(18px); }
+  .header-inner { min-height: 4.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .brand { display: inline-flex; align-items: center; gap: .75rem; font-weight: 800; letter-spacing: -.02em; }
+  .brand small { color: var(--muted); font-size: .8em; font-weight: 500; }
+  .brand-mark { display: grid; place-items: center; width: 2rem; height: 2rem; color: white; background: var(--green-deep); border-radius: .55rem; font-family: 'IBM Plex Mono', monospace; font-size: .72rem; }
+  nav { display: flex; align-items: center; gap: 1.6rem; }
+  nav a { position: relative; color: var(--muted); font-size: .95rem; font-weight: 650; }
+  nav a:hover, nav a.active { color: var(--ink); }
+  nav a.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: -.75rem; height: 2px; background: var(--green); }
+  .menu-button { display: none; color: var(--ink); border: 1px solid var(--line); background: white; border-radius: .7rem; padding: .45rem .8rem; }
+  @media (max-width: 680px) {
+    .menu-button { display: block; }
+    nav { display: none; position: absolute; left: 1rem; right: 1rem; top: 4.1rem; padding: 1.2rem; flex-direction: column; align-items: stretch; border: 1px solid var(--line); border-radius: 1rem; background: white; box-shadow: var(--shadow); }
+    nav.open { display: flex; }
+    nav a { padding: .4rem; }
+    nav a.active::after { display: none; }
+  }
+</style>

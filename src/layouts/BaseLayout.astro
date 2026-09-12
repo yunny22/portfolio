@@ -1,0 +1,67 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Taeyun Kim — Autonomous Driving Research Portfolio',
+  description = 'End-to-End 자율주행, 모방학습, 강화학습, Planning, Control과 Sim-to-Real 프로젝트 포트폴리오.',
+  image,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = image ? new URL(`${import.meta.env.BASE_URL}${image}`, Astro.site) : undefined;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b1320" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">본문으로 이동</a>
+    <Header />
+    <main id="content"><slot /></main>
+    <Footer />
+    <script>
+      const mountReveal = () => {
+        const elements = document.querySelectorAll<HTMLElement>('.reveal');
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+          elements.forEach((element) => element.classList.add('is-visible'));
+          return;
+        }
+        const updateVisibility = (entries: IntersectionObserverEntry[]) => {
+          entries.forEach((entry) => {
+            entry.target.classList.toggle('is-visible', entry.isIntersecting);
+          });
+        };
+        const observer = new IntersectionObserver(updateVisibility, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+        const earlyObserver = new IntersectionObserver(updateVisibility, { threshold: 0.01, rootMargin: '0px 0px 28% 0px' });
+        elements.forEach((element, index) => {
+          element.style.transitionDelay = `${(index % 5) * 70}ms`;
+          if (element.classList.contains('reveal-early')) earlyObserver.observe(element);
+          else observer.observe(element);
+        });
+      };
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountReveal, { once: true });
+      else mountReveal();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+log/
+logs/
+portfolio-project-audit-*.md
+portfolio-site-current-state-report-*.md
+tmp/

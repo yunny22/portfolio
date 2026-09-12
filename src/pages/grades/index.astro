@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const semesters = [
+  { term: '2022 · 1학기', credits: '17', gpa: '4.10', rank: '7 / 41' },
+  { term: '2022 · 2학기', credits: '12', gpa: '3.62', rank: '14 / 38' },
+  { term: '2023 · 1학기', credits: '21', gpa: '3.72', rank: '14 / 40' },
+  { term: '2023 · 하계', credits: '3', gpa: '4.50', rank: '—' },
+  { term: '2023 · 2학기', credits: '20', gpa: '3.89', rank: '14 / 40' },
+  { term: '2024 · 동계', credits: '2', gpa: 'P', rank: '—' },
+  { term: '2025 · 하계', credits: '2', gpa: 'P', rank: '—' },
+  { term: '2026 · 1학기', credits: '20', gpa: '4.41', rank: '2 / 8' },
+];
+
+const majorCourses = [
+  { term: '2026-1', name: 'AUTONOMOUS SYSTEM PLATFORM', credits: '3', grade: 'A+' },
+  { term: '2026-1', name: '데이터베이스', credits: '3', grade: 'A+' },
+  { term: '2026-1', name: '자기설계(드림학기)D3', credits: '9', grade: 'A+' },
+  { term: '2026-1', name: '자율주행자동차공학', credits: '3', grade: 'A' },
+  { term: '2023-2', name: '공업수학2', credits: '3', grade: 'A+' },
+  { term: '2023-2', name: '메카트로닉스', credits: '3', grade: 'B+' },
+  { term: '2023-2', name: '센서및계측공학', credits: '3', grade: 'A+' },
+  { term: '2023-2', name: '전산모델링', credits: '3', grade: 'A' },
+  { term: '2023-1', name: '공업수학1', credits: '3', grade: 'B+' },
+  { term: '2023-1', name: '운행체전기전자', credits: '3', grade: 'A+' },
+  { term: '2023-1', name: '기초운행체역학', credits: '3', grade: 'A' },
+  { term: '2023-1', name: '선형대수이론', credits: '3', grade: 'B+' },
+  { term: '2023-1', name: '임베디드시스템', credits: '3', grade: 'B+' },
+  { term: '2023-1', name: '자료구조와알고리즘', credits: '3', grade: 'B+' },
+  { term: '2022-2', name: '기초설계', credits: '3', grade: 'A+' },
+  { term: '2022-2', name: '디지털논리회로', credits: '3', grade: 'B+' },
+  { term: '2022-1', name: '스마트운행체개론', credits: '3', grade: 'B+' },
+];
+---
+
+<BaseLayout title="Academic Record — Taeyun Kim" description="김태윤의 건국대학교 스마트운행체공학과 성적 요약과 주요 전공 이수 내역">
+  <header class="grade-hero">
+    <div class="grade-shell">
+      <a class="back mono" href={base}>← Home</a>
+      <p class="eyebrow">Academic record · 2026.09.10</p>
+      <h1>Academic Record</h1>
+      <div class="identity">
+        <span>김태윤 · Taeyun Kim</span>
+        <span>건국대학교 스마트운행체공학과 · 학부 재학</span>
+      </div>
+      <div class="grade-actions">
+        <a class="download-button" href={`${base}docs/kim-taeyun-academic-record-redacted.pdf`} download>성적표 PDF 다운로드 ↓</a>
+        <span>학번과 조회 IP를 제외한 공개용 사본</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="grade-shell grade-content">
+    <section class="summary-grid reveal" aria-label="성적 요약">
+      <div><span>누적 평점</span><strong>3.98</strong><small>/ 4.50</small></div>
+      <div><span>전공 평점</span><strong>4.03</strong><small>/ 4.50</small></div>
+      <div><span>취득 학점</span><strong>97</strong><small>credits</small></div>
+      <div><span>전체 석차</span><strong>6 / 15</strong><small>학과·학년 기준</small></div>
+    </section>
+
+    <section class="record-section reveal">
+      <header><p class="eyebrow">01 · Semester record</p><h2>학기별 성적</h2></header>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>학기</th><th>취득 학점</th><th>평점 평균</th><th>학기 석차</th></tr></thead>
+          <tbody>{semesters.map((row) => <tr><td>{row.term}</td><td>{row.credits}</td><td><strong>{row.gpa}</strong></td><td>{row.rank}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="record-section reveal">
+      <header><p class="eyebrow">02 · Major coursework</p><h2>주요 전공 이수</h2></header>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>학기</th><th>과목명</th><th>학점</th><th>등급</th></tr></thead>
+          <tbody>{majorCourses.map((row) => <tr><td>{row.term}</td><td>{row.name}</td><td>{row.credits}</td><td><strong>{row.grade}</strong></td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="source-note">건국대학교 개인별 전체 성적조회 자료(2026-09-10)를 기준으로 작성했습니다. 개인정보 보호를 위해 학번과 조회 정보는 표시하지 않습니다.</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .grade-shell { width: min(calc(100% - 3rem),1180px); margin-inline: auto; }
+  .grade-hero { padding: clamp(3rem,6vw,5.5rem) 0 3rem; border-bottom: 4px solid var(--green-deep); background: #f8faf7; }
+  .back { display: inline-block; margin-bottom: 3rem; color: var(--muted); }
+  .back:hover { color: var(--green-deep); }
+  .grade-hero h1 { margin: .5rem 0 2rem; font-size: clamp(3.4rem,8vw,6.5rem); }
+  .identity { display: grid; grid-template-columns: .7fr 1.3fr; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .identity span { padding: .9rem 1rem; }
+  .identity span:first-child { color: var(--green-deep); background: #e9f2e8; font-weight: 750; }
+  .grade-actions { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; }
+  .grade-actions > span { color: var(--muted); font-size: .78rem; }
+  .download-button { display: inline-flex; align-items: center; min-height: 3rem; padding: .7rem 1.1rem; color: white; background: var(--green-deep); border: 1px solid var(--green-deep); font-weight: 750; }
+  .download-button:hover { color: var(--green-deep); background: white; }
+  .grade-content { padding: clamp(3rem,7vw,6rem) 0; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .summary-grid div { min-height: 11rem; padding: 1.4rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #edf4ec; }
+  .summary-grid span,.summary-grid strong,.summary-grid small { display: block; }
+  .summary-grid span { color: var(--green-deep); font: 600 .7rem 'IBM Plex Mono',monospace; letter-spacing: .08em; }
+  .summary-grid strong { margin-top: 1.4rem; font: 700 clamp(2rem,4vw,3.4rem) 'IBM Plex Mono',monospace; }
+  .summary-grid small { color: var(--muted); }
+  .record-section { margin-top: clamp(4rem,8vw,7rem); }
+  .record-section header { margin-bottom: 2rem; padding-bottom: 1.2rem; border-bottom: 3px solid var(--green-deep); }
+  .record-section h2 { margin: .45rem 0 0; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: white; }
+  th,td { padding: .85rem 1rem; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+  th { color: var(--green-deep); background: #edf4ec; font-size: .78rem; }
+  td { font-size: .94rem; }
+  tbody tr:hover { background: #f5f8f3; }
+  .source-note { margin: 3rem 0 0; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
+  @media (max-width: 760px) { .summary-grid { grid-template-columns: repeat(2,1fr); } .identity { grid-template-columns: 1fr; } .grade-actions { align-items: flex-start; flex-direction: column; } }
+  @media (max-width: 480px) { .grade-shell { width: min(calc(100% - 2rem),1180px); } .summary-grid { grid-template-columns: 1fr; } }
+</style>

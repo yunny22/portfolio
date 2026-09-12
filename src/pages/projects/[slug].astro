@@ -1,0 +1,304 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects, type Project } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+interface Props { project: Project; }
+const { project } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const image = project.image ? `${base}${project.image}` : undefined;
+const media = project.media ?? [];
+const metrics = project.metrics ?? [];
+const statusClass = `status status--${project.status.replaceAll(' ', '-')}`;
+const statusLabels = { Completed: '완료', Ongoing: '진행 중' } as const;
+const kindLabels = {
+  research: 'Research Project',
+  engineering: 'Engineering / Competition Project',
+  'ongoing-research': 'Ongoing Research',
+} as const;
+---
+
+<BaseLayout title={`${project.shortTitle} — Taeyun Kim`} description={project.summary} image={project.image}>
+  <article class:list={['project-page', `accent-${project.accent}`]}>
+    <div class="project-topbar">
+      <div class="wide-shell">
+        <a class="back mono" href={`${base}projects/`}>← 프로젝트 목록</a>
+        <span class="mono">PORTFOLIO / PROJECT {String(project.order).padStart(2, '0')}</span>
+      </div>
+    </div>
+
+    <section class="project-sheet">
+      <div class="wide-shell">
+        <header class="sheet-heading reveal">
+          <div>
+            <p class="eyebrow">Project {String(project.order).padStart(2, '0')} · {project.eyebrow}</p>
+            <h1>{project.title}</h1>
+          </div>
+          <div class="project-meta"><span class={statusClass}>{statusLabels[project.status]}</span><span class="mono">{project.period}</span></div>
+        </header>
+
+        <div class="portfolio-board">
+          <aside class:list={['overview-panel', 'reveal', !image && 'overview-panel--text-only']}>
+            <div class="overview-copy">
+              <p class="panel-label">{kindLabels[project.kind]} · Overview</p>
+              <p class="summary">{project.summary}</p>
+              <ul class="tag-list">{project.tags.map((tag) => <li class="tag">{tag}</li>)}</ul>
+            </div>
+            {image && (
+              <figure class="project-figure">
+                {project.slug === 'autonomous-parking' ? (
+                  <button
+                    class="project-figure-button"
+                    type="button"
+                    data-media-open
+                    data-media-type="image"
+                    data-media-src={image}
+                    data-media-alt={project.imageAlt ?? ''}
+                    data-media-caption="자율주차 정적 지도와 waypoint 경로"
+                    aria-label="자율주차 사진 크게 보기"
+                  >
+                    <img src={image} alt={project.imageAlt ?? ''} />
+                    <span class="media-action">사진 크게 보기 <b aria-hidden="true">↗</b></span>
+                  </button>
+                ) : (
+                  <img src={image} alt={project.imageAlt ?? ''} />
+                )}
+                <figcaption>프로젝트 근거 자료 · 개발 기록</figcaption>
+              </figure>
+            )}
+          </aside>
+
+          <div class="research-panel">
+            <section class="contribution-panel reveal">
+              <header>
+                <p class="panel-label">My Contribution</p>
+                <strong>{project.contributionLead}</strong>
+              </header>
+              <ul>{project.role.map((item) => <li>{item}</li>)}</ul>
+            </section>
+
+            {project.problem && (
+              <section class="question-panel reveal">
+                <p class="panel-label">{project.problem.label}</p>
+                <h2>{project.problem.title}</h2>
+              </section>
+            )}
+
+            {metrics.length > 0 && (
+              <aside class="metrics" aria-label="측정 결과와 성과">
+                {metrics.map((metric) => <div class="reveal"><strong>{metric.value}</strong><span>{metric.label}</span></div>)}
+              </aside>
+            )}
+
+            <div class="detail-grid">
+              {project.sections.map((section, index) => (
+                <section class:list={['detail-panel', 'reveal', `detail-panel--${section.tone ?? 'default'}`, section.wide && 'detail-panel--wide']}>
+                  <header>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div><p class="panel-label">{section.label}</p><h2>{section.title}</h2></div>
+                  </header>
+                  <ul>{section.items.map((item) => <li>{item}</li>)}</ul>
+                </section>
+              ))}
+            </div>
+
+            {project.repositories && project.repositories.length > 0 && (
+              <div class="repository-list">
+                {project.repositories.map((repository) => (
+                  <a class="repository reveal" href={repository.url} target="_blank" rel="noreferrer"><span><span class="panel-label">Repository</span><strong>{repository.label}</strong></span><span aria-hidden="true">↗</span></a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {media.length > 0 && (
+            <section class="evidence-gallery reveal reveal-early" aria-labelledby="evidence-title">
+              <header class="evidence-heading">
+                <div><p class="panel-label">Visual evidence</p><h2 id="evidence-title">사진과 주행 기록</h2></div>
+                <p>이미지나 영상을 누르면 크게 볼 수 있습니다.</p>
+              </header>
+              <div class:list={['media-grid', media.length === 1 && 'media-grid--single']}>
+                {media.map((item, index) => {
+                  const src = `${base}${item.src}`;
+                  const poster = item.poster ? `${base}${item.poster}` : undefined;
+                  return (
+                    <figure class:list={['media-item', `media-item--${item.fit ?? 'cover'}`]}>
+                      <button
+                        class="media-card"
+                        type="button"
+                        data-media-open
+                        data-media-type={item.type}
+                        data-media-src={src}
+                        data-media-poster={poster}
+                        data-media-alt={item.alt}
+                        data-media-caption={item.caption}
+                        aria-label={`${item.caption} 크게 보기`}
+                      >
+                        {item.type === 'video' ? (
+                          <video src={src} poster={poster} muted autoplay loop playsinline preload="metadata" aria-label={item.alt}></video>
+                        ) : (
+                          <img src={src} alt={item.alt} loading="lazy" />
+                        )}
+                        <span class="media-action">{item.type === 'video' ? '영상 크게 보기' : '사진 크게 보기'} <b aria-hidden="true">↗</b></span>
+                        <span class="media-number mono">{String(index + 1).padStart(2, '0')}</span>
+                      </button>
+                      <figcaption>{item.caption}</figcaption>
+                    </figure>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+        </div>
+      </div>
+    </section>
+  </article>
+
+  {media.length > 0 && (
+    <dialog class="media-dialog" data-media-dialog aria-label="프로젝트 미디어 크게 보기">
+      <form method="dialog"><button class="dialog-close" aria-label="닫기">×</button></form>
+      <div class="dialog-content">
+        <div class="dialog-media" data-dialog-media></div>
+        <p data-dialog-caption></p>
+      </div>
+    </dialog>
+  )}
+</BaseLayout>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-media-dialog]');
+  const holder = dialog?.querySelector<HTMLElement>('[data-dialog-media]');
+  const caption = dialog?.querySelector<HTMLElement>('[data-dialog-caption]');
+
+  document.querySelectorAll<HTMLButtonElement>('[data-media-open]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!dialog || !holder || !caption) return;
+      const type = button.dataset.mediaType;
+      const src = button.dataset.mediaSrc ?? '';
+      const alt = button.dataset.mediaAlt ?? '';
+      const node = type === 'video' ? document.createElement('video') : document.createElement('img');
+      node.src = src;
+      if (node instanceof HTMLVideoElement) {
+        node.controls = true;
+        node.autoplay = true;
+        node.loop = true;
+        node.muted = true;
+        node.playsInline = true;
+        if (button.dataset.mediaPoster) node.poster = button.dataset.mediaPoster;
+      } else {
+        node.alt = alt;
+      }
+      holder.replaceChildren(node);
+      caption.textContent = button.dataset.mediaCaption ?? '';
+      dialog.showModal();
+    });
+  });
+
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog?.addEventListener('close', () => holder?.replaceChildren());
+</script>
+
+<style>
+  .project-page { --accent: var(--green); background: #fff; }
+  .accent-cyan { --accent: var(--cyan); } .accent-orange { --accent: var(--orange); } .accent-violet { --accent: var(--violet); }
+  .wide-shell { width: min(calc(100% - 3rem), 1380px); margin-inline: auto; }
+  .project-topbar { border-bottom: 1px solid var(--line); background: #fff; }
+  .project-topbar .wide-shell { display: flex; justify-content: space-between; gap: 2rem; padding-block: 1rem; color: var(--muted); }
+  .back:hover { color: var(--green-deep); }
+  .project-sheet { min-height: calc(100vh - 9rem); padding: clamp(2.5rem,5vw,4.5rem) 0 clamp(5rem,8vw,8rem); }
+  .sheet-heading { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 3rem; align-items: end; padding-bottom: 2rem; border-bottom: 4px solid var(--green-deep); }
+  .sheet-heading .eyebrow { color: var(--green-deep); }
+  .sheet-heading h1 { max-width: 1050px; margin: .55rem 0 0; font-size: clamp(2.4rem,5vw,4.7rem); }
+  .project-meta { display: flex; gap: 1rem; align-items: center; color: var(--muted); white-space: nowrap; }
+  .portfolio-board { display: grid; grid-template-columns: minmax(300px,.78fr) minmax(0,1.65fr); gap: .8rem; margin-top: .8rem; align-items: start; }
+  .overview-panel { display: flex; min-height: 100%; flex-direction: column; justify-content: space-between; gap: 2.5rem; padding: clamp(1.5rem,2.5vw,2.4rem); background: #e9f1f6; }
+  .overview-panel--text-only { justify-content: flex-start; min-height: 0; }
+  .panel-label { margin: 0 0 .45rem; color: var(--green-deep); font: 600 clamp(.92rem,1vw,1rem) 'IBM Plex Mono',monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .summary { margin: 1rem 0 1.5rem; font-size: clamp(1.04rem,1.45vw,1.24rem); line-height: 1.75; }
+  .project-figure { margin: 0; }
+  .project-figure img { width: 100%; max-height: 430px; object-fit: cover; background: #dfe4dd; }
+  .project-figure-button { position: relative; display: block; width: 100%; padding: 0; overflow: hidden; border: 0; color: white; background: transparent; cursor: zoom-in; }
+  .project-figure-button img { display: block; transition: transform .5s cubic-bezier(.2,.7,.3,1); }
+  .project-figure-button:hover img { transform: scale(1.025); }
+  .project-figure-button::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent,rgba(10,20,15,.74)); pointer-events: none; }
+  .project-figure-button .media-action { position: absolute; z-index: 1; left: 1rem; bottom: .85rem; font-size: .82rem; font-weight: 750; }
+  .project-figure-button .media-action b { margin-left: .25rem; font-size: 1rem; }
+  .project-figure figcaption { margin-top: .55rem; color: var(--muted); font: .64rem 'IBM Plex Mono',monospace; text-align: right; letter-spacing: .04em; }
+  .research-panel { display: grid; gap: .8rem; padding: .8rem; background: #edf5e8; }
+  .contribution-panel { padding: clamp(1.5rem,2.7vw,2.6rem); border-top: 5px solid var(--green-deep); background: #e5f0e5; }
+  .contribution-panel header { padding-bottom: 1rem; border-bottom: 1px solid rgba(30,92,64,.18); }
+  .contribution-panel strong { display: block; font-size: clamp(1.15rem,2vw,1.7rem); line-height: 1.45; }
+  .contribution-panel ul { margin: 1rem 0 0; padding-left: 1.2rem; }
+  .contribution-panel li { padding: .3rem 0 .3rem .25rem; line-height: 1.7; }
+  .question-panel { padding: clamp(1.5rem,2.7vw,2.6rem); background: #fff; border-top: 5px solid var(--accent); }
+  .question-panel h2 { max-width: 920px; margin: 0; font-size: clamp(1.35rem,2.2vw,2.2rem); line-height: 1.4; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 1px; background: rgba(30,92,64,.16); }
+  .metrics div { min-width: 0; padding: 1.25rem 1.35rem; background: rgba(255,255,255,.88); }
+  .metrics strong,.metrics span { display: block; }
+  .metrics strong { font: 700 clamp(1.35rem,2.5vw,2.2rem) 'IBM Plex Mono',monospace; overflow-wrap: anywhere; }
+  .metrics span { margin-top: .3rem; color: var(--muted); font-size: .76rem; line-height: 1.45; }
+  .detail-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .8rem; }
+  .detail-panel { padding: 1.5rem; background: rgba(255,255,255,.84); }
+  .detail-panel header { display: grid; grid-template-columns: 2.2rem 1fr; gap: .8rem; align-items: start; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+  .detail-panel header > span { color: var(--green-deep); font: 600 .72rem 'IBM Plex Mono',monospace; }
+  .detail-panel h2 { margin: 0; font-size: clamp(1.25rem,1.8vw,1.65rem); }
+  .detail-panel ol,.detail-panel ul { margin: 1rem 0 0; padding-left: 1.2rem; }
+  .detail-panel li { padding: .35rem 0 .35rem .25rem; font-size: .91rem; line-height: 1.65; }
+  .detail-panel--result { background: #e8f2e8; }
+  .detail-panel--limit { background: #f4f0e5; }
+  .detail-panel--focus { border-left: 5px solid var(--violet); background: #f0edf9; }
+  .detail-panel--wide { grid-column: 1 / -1; }
+  .detail-panel--wide ul { columns: 2; column-gap: 2.5rem; }
+  .detail-panel--wide li { break-inside: avoid; }
+  .repository-list { display: grid; gap: .5rem; }
+  .repository { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.4rem; border: 1px solid rgba(30,92,64,.2); background: white; font-size: 1.25rem; }
+  .repository strong { display: block; }
+  .repository > span:last-child { font-size: 1.8rem; }
+  .repository:hover { color: white; background: var(--green-deep); }
+  .repository:hover .panel-label { color: #b9ddc6; }
+  .evidence-gallery { grid-column: 1 / -1; margin-top: 1rem; padding: clamp(1.3rem,2.4vw,2.2rem); border-top: 4px solid var(--green-deep); background: #f6f7f2; }
+  .evidence-heading { display: flex; justify-content: space-between; gap: 2rem; align-items: end; margin-bottom: 1.4rem; }
+  .evidence-heading h2 { margin: 0; font-size: clamp(1.65rem,2.5vw,2.35rem); }
+  .evidence-heading > p { margin: 0; color: var(--muted); font-size: .86rem; }
+  .media-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem 1rem; }
+  .media-grid--single { grid-template-columns: minmax(0,920px); }
+  .media-item { min-width: 0; margin: 0; }
+  .media-card { position: relative; display: block; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; padding: 0; border: 1px solid var(--line); color: white; background: #dfe5df; cursor: zoom-in; }
+  .media-card img,.media-card video { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.7,.3,1); }
+  .media-item--contain .media-card img,.media-item--contain .media-card video { object-fit: contain; background: #e8ebe7; }
+  .media-card:hover img,.media-card:hover video { transform: scale(1.025); }
+  .media-card::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent,rgba(10,20,15,.74)); pointer-events: none; }
+  .media-action { position: absolute; z-index: 1; left: 1rem; bottom: .85rem; font-size: .82rem; font-weight: 750; }
+  .media-action b { margin-left: .25rem; font-size: 1rem; }
+  .media-number { position: absolute; z-index: 1; top: .75rem; right: .75rem; padding: .25rem .45rem; color: var(--ink); background: rgba(255,255,255,.9); }
+  .media-item figcaption { margin-top: .55rem; color: var(--muted); font-size: .84rem; line-height: 1.55; }
+  .media-dialog { width: min(calc(100% - 2rem),1200px); max-width: none; max-height: calc(100vh - 2rem); padding: 0; border: 0; border-radius: .9rem; color: white; background: #101512; box-shadow: 0 30px 100px rgba(0,0,0,.4); }
+  .media-dialog::backdrop { background: rgba(7,12,9,.82); backdrop-filter: blur(5px); }
+  .media-dialog form { position: absolute; z-index: 2; top: .7rem; right: .7rem; }
+  .dialog-close { display: grid; width: 2.75rem; height: 2.75rem; place-items: center; padding: 0; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; color: white; background: rgba(10,15,12,.8); cursor: pointer; font-size: 1.7rem; line-height: 1; }
+  .dialog-content { padding: clamp(.6rem,1.5vw,1rem); }
+  .dialog-media { display: grid; min-height: min(72vh,720px); place-items: center; overflow: hidden; border-radius: .5rem; background: #070907; }
+  .dialog-media :global(img),.dialog-media :global(video) { display: block; width: 100%; max-height: 76vh; object-fit: contain; }
+  .dialog-content > p { margin: .8rem .35rem .2rem; color: #d9e2dc; font-size: .9rem; }
+  @media (max-width: 980px) {
+    .portfolio-board { grid-template-columns: 1fr; }
+    .overview-panel { min-height: 0; }
+    .project-figure img { max-height: 560px; }
+  }
+  @media (max-width: 680px) {
+    .wide-shell { width: min(calc(100% - 2rem),1380px); }
+    .project-topbar .wide-shell,.sheet-heading { align-items: flex-start; flex-direction: column; }
+    .sheet-heading { display: flex; gap: 1rem; }
+    .project-meta { white-space: normal; flex-wrap: wrap; }
+    .detail-grid,.metrics,.media-grid { grid-template-columns: 1fr; }
+    .detail-panel--wide ul { columns: 1; }
+    .portfolio-board,.research-panel,.detail-grid { gap: .55rem; }
+    .evidence-heading { align-items: flex-start; flex-direction: column; gap: .4rem; }
+    .dialog-media { min-height: 45vh; }
+  }
+</style>

@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { featuredProjects, projects, researchJourney } from '../data/projects';
+
+const base = import.meta.env.BASE_URL;
+const researchFocus = [
+  {
+    number: '01',
+    title: 'Learning-based Autonomous Driving',
+    items: ['End-to-End Driving', 'Imitation Learning', 'Offline Reinforcement Learning'],
+  },
+  {
+    number: '02',
+    title: 'Autonomous Driving Planning & Control',
+    items: ['Path Planning', 'Decision Making', 'Vehicle Control'],
+  },
+  {
+    number: '03',
+    title: 'Cooperative & Robust Autonomous Driving',
+    items: ['V2I', 'Cooperative Perception', 'Sim-to-Real', 'Occlusion-aware Driving'],
+  },
+];
+---
+
+<BaseLayout>
+  <section class="hero" id="home">
+    <div class="shell hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Autonomous Driving Research Portfolio</p>
+        <h1 class="reveal">Taeyun Kim</h1>
+        <p class="affiliation reveal">Konkuk University · Smart Vehicle Engineering</p>
+        <p class="hero-intro reveal">
+          학습 기반 자율주행과 경로 계획·제어, Sim-to-Real,<br />
+          V2I 협력주행을 중심으로 프로젝트와 연구를 진행하고 있습니다.
+        </p>
+        <div class="hero-actions reveal">
+          <a class="button button--accent" href="#featured-projects">Featured Projects ↓</a>
+          <a class="button button--ghost" href={`${base}grades/`}>Academic Record ↗</a>
+        </div>
+      </div>
+      <figure class="hero-visual reveal">
+        <img src={`${base}media/profile-kim-taeyun.jpg`} alt="김태윤 프로필 사진" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section focus" id="research-focus">
+    <div class="shell">
+      <header class="section-heading reveal">
+        <div><p class="eyebrow">Research Focus</p><h2>연구 관심</h2></div>
+        <p>자율주행 차량을 중심으로 학습 기반 주행, 경로 계획·제어, Sim-to-Real을 연구하고 있습니다.</p>
+      </header>
+      <div class="focus-grid">
+        {researchFocus.map((focus) => (
+          <article class="focus-card reveal">
+            <span class="mono">{focus.number}</span>
+            <h3>{focus.title}</h3>
+            <ul>{focus.items.map((item) => <li>{item}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section featured" id="featured-projects">
+    <div class="shell">
+      <header class="section-heading reveal">
+        <div><p class="eyebrow">Selected Work · {featuredProjects.length} of {projects.length} Projects</p><h2>Featured Projects</h2></div>
+      </header>
+      <div class="project-list">
+        {featuredProjects.map((project, index) => <ProjectCard project={project} index={index} />)}
+      </div>
+      <div class="all-projects reveal"><a class="button button--ghost" href={`${base}projects/`}>View All {projects.length} Projects →</a></div>
+    </div>
+  </section>
+
+  <section class="section journey" id="research-journey">
+    <div class="shell">
+      <header class="section-heading reveal">
+        <div><p class="eyebrow">Research Journey</p><h2>관심의 발전 과정</h2></div>
+      </header>
+      <ol class="journey-list">
+        {researchJourney.map((item, index) => (
+          <li class="reveal">
+            <span class="journey-index mono">{String(index + 1).padStart(2, '0')}</span>
+            <div><h3>{item.title}</h3><p>{item.detail}</p></div>
+            {index < researchJourney.length - 1 && <span class="journey-arrow" aria-hidden="true">↓</span>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section academic" id="academic">
+    <div class="shell academic-inner reveal">
+      <div>
+        <p class="eyebrow">Academic Snapshot</p>
+        <h2>Konkuk University</h2>
+        <p>Smart Vehicle Engineering</p>
+      </div>
+      <dl>
+        <div><dt>GPA</dt><dd>3.98 / 4.50</dd></div>
+        <div><dt>Status</dt><dd>Undergraduate Student</dd></div>
+      </dl>
+      <a class="button button--accent" href={`${base}grades/`}>Academic Record →</a>
+    </div>
+  </section>
+
+  <section class="contact section" id="contact">
+    <div class="shell">
+      <header class="section-heading reveal">
+        <div><p class="eyebrow">Contact</p><h2>Contact</h2></div>
+      </header>
+      <div class="contact-grid">
+        <a class="contact-card reveal" href="mailto:daniyun@konkuk.ac.kr">
+          <span class="contact-label">Email</span>
+          <strong>daniyun@konkuk.ac.kr</strong>
+          <span class="contact-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact-card reveal" href="https://github.com/yunny22" target="_blank" rel="noreferrer">
+          <span class="contact-label">GitHub</span>
+          <strong>github.com/yunny22</strong>
+          <span class="contact-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { min-height: min(780px,calc(100vh - 4.5rem)); display: flex; align-items: center; border-bottom: 1px solid var(--line); background: linear-gradient(135deg,#fbfbf8 0%,#edf4ef 100%); }
+  .hero-inner { display: grid; grid-template-columns: minmax(0,1fr) minmax(190px,245px); gap: clamp(3rem,8vw,8rem); align-items: center; padding: clamp(5rem,10vw,8.5rem) 0; }
+  .hero h1 { margin: .8rem 0 .55rem; font-size: clamp(4rem,9vw,7rem); }
+  .affiliation { margin-bottom: 1.8rem; color: var(--green-deep); font-size: clamp(1.05rem,2vw,1.4rem); font-weight: 750; }
+  .hero-intro { max-width: 760px; margin-bottom: 2rem; color: var(--muted); font-size: clamp(1.12rem,2vw,1.35rem); line-height: 1.75; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .hero-visual { position: relative; width: min(100%,245px); margin: 0; justify-self: end; }
+  .hero-visual::before { content: ''; position: absolute; inset: -.8rem .8rem .8rem -.8rem; z-index: -1; border-radius: 1.35rem; background: #dcece1; }
+  .hero-visual img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 1.1rem; box-shadow: var(--shadow); }
+  .focus { background: #fff; }
+  .focus-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .focus-card { min-height: 19rem; padding: 1.6rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #f9faf7; }
+  .focus-card > span { color: var(--green); }
+  .focus-card h3 { min-height: 4.5rem; margin: 1.8rem 0 1.2rem; font-size: clamp(1.35rem,2.2vw,1.85rem); }
+  .focus-card ul { margin: 0; padding: 0; list-style: none; color: var(--muted); }
+  .focus-card li { padding: .45rem 0; border-top: 1px solid var(--line); }
+  .featured { background: var(--paper); }
+  .project-list { display: grid; grid-template-columns: 1fr; }
+  .all-projects { display: flex; justify-content: flex-end; margin-top: 2rem; }
+  .journey { border-block: 1px solid var(--line); background: #edf4ef; }
+  .journey-list { margin: 0; padding: 0; list-style: none; border-top: 3px solid var(--green-deep); }
+  .journey-list li { position: relative; display: grid; grid-template-columns: 5rem 1fr; gap: 1.5rem; padding: 1.4rem 0; border-bottom: 1px solid rgba(30,92,64,.18); }
+  .journey-index { color: var(--green-deep); }
+  .journey-list h3 { margin: 0 0 .35rem; font-size: clamp(1.25rem,2.1vw,1.75rem); }
+  .journey-list p { margin: 0; color: var(--muted); }
+  .journey-arrow { position: absolute; right: .6rem; bottom: -1rem; z-index: 1; display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; color: white; background: var(--green-deep); }
+  .academic { background: #fff; }
+  .academic-inner { display: grid; grid-template-columns: 1.2fr 1fr auto; gap: clamp(2rem,5vw,5rem); align-items: end; padding-block: clamp(2rem,4vw,3.5rem); border-block: 4px solid var(--green-deep); }
+  .academic h2 { margin: .5rem 0; font-size: clamp(2rem,4vw,3.4rem); }
+  .academic p { margin: 0; color: var(--muted); }
+  .academic dl { margin: 0; }
+  .academic dl div { display: grid; grid-template-columns: 5rem 1fr; padding: .65rem 0; border-bottom: 1px solid var(--line); }
+  .academic dt { color: var(--green-deep); font-weight: 750; }
+  .academic dd { margin: 0; }
+  .contact { background: var(--panel); }
+  .contact .section-heading { grid-template-columns: 1fr; }
+  .contact-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid var(--line); }
+  .contact-card { position: relative; display: flex; min-height: 12rem; flex-direction: column; justify-content: space-between; gap: 2rem; padding: 1.8rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.42); }
+  .contact-card:hover { color: white; background: var(--green-deep); }
+  .contact-label { font: 600 .72rem 'IBM Plex Mono',monospace; text-transform: uppercase; }
+  .contact-card strong { font-size: clamp(1.05rem,2vw,1.45rem); overflow-wrap: anywhere; }
+  .contact-arrow { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; }
+  @media (max-width: 850px) {
+    .focus-grid { grid-template-columns: 1fr; }
+    .focus-card { min-height: 0; }
+    .focus-card h3 { min-height: 0; }
+    .academic-inner { grid-template-columns: 1fr; align-items: start; }
+  }
+  @media (max-width: 680px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { width: 165px; justify-self: start; grid-row: 1; }
+    .hero h1 { font-size: clamp(3.5rem,18vw,5.5rem); }
+    .hero-intro br { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .journey-list li { grid-template-columns: 3rem 1fr; gap: .8rem; padding-right: 1rem; }
+  }
+</style>
