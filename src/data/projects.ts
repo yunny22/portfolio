@@ -660,11 +660,9 @@ export const projectCategoryOrder: ProjectCategory[] = [
   'Foundation / Other Experience',
 ];
 export const researchJourney = [
-  { title: 'Vehicle / Control Foundation', detail: '센서, 모터와 PID 제어를 하나의 차량 시스템으로 통합' },
-  { title: 'Planning & Decision Making', detail: '경로 계획, 장애물 회피와 차량 판단 구조 경험' },
-  { title: 'Hybrid Planning & Learning', detail: 'Imitation Learning의 부드러운 조향과 Rule-based planning의 안정성을 결합한 Hybrid 구조 설계' },
-  { title: 'Competition Imitation Learning', detail: '학습 기반 steering을 실제 대회 mission logic과 통합' },
-  { title: 'Offline RL / Sim-to-Real', detail: 'Canonical perception, Behavioral Cloning, TD3+BC와 실차 이전 실험' },
-  { title: 'Real-Vehicle System Integration', detail: 'RTK, perception, planning과 control을 실제 차량 stack으로 통합' },
-  { title: 'V2I Cooperative End-to-End Driving', detail: '가려진 위험 객체를 인프라 정보로 보완하는 진행 중 졸업연구' },
+  { title: 'Vehicle & Control Foundation', detail: '센서·구동·제어를 실제 차량 시스템에 통합' },
+  { title: 'Planning & Hybrid Driving', detail: '경로 계획과 Rule-based 판단을 거쳐 학습 기반 주행과의 결합으로 확장' },
+  { title: 'Learning-based Competition Driving', detail: '사람 주행 데이터 기반 Imitation Learning을 실제 폐루프 주행에 적용' },
+  { title: 'Sim-to-Real & Real-Vehicle Validation', detail: 'Offline RL과 simulation–real gap을 경험하고 실제 차량 시스템으로 검증 범위를 확장' },
+  { title: 'Cooperative End-to-End Driving', detail: '현재는 사각지대 문제를 V2I 정보로 보완하는 Cooperative E2E Driving을 연구' },
 ];
