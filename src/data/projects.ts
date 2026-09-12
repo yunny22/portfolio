@@ -207,19 +207,28 @@ const projectEntries: Project[] = [
     kind: 'engineering',
     category: 'Learning-based Autonomous Driving',
     featured: true,
-    summary: '사람이 직접 주행해 수집한 데이터로 Imitation Learning의 수행 범위를 직선·곡선에서 장애물·보행자 회피까지 확장하고, 폐루프 주행에서 control frequency와 데이터 구성이 미치는 영향을 확인한 프로젝트다.',
-    contributionLead: 'Training data · Closed-loop validation · Mission integration',
+    summary: 'Taeyun Kim이 직접 설계·구현한 Imitation Learning 주행 시스템으로, 사람이 직접 주행해 수집한 데이터로 직선·곡선에서 장애물·보행자 회피까지 학습 범위를 확장하고 폐루프 주행에서 control frequency와 데이터 구성이 미치는 영향을 확인한 프로젝트다.',
+    contributionLead: 'Individual system implementation · Team-supported high-speed data collection',
     role: [
-      '자이트론 자체 제작 시뮬레이션에서 camera image와 keyboard steering을 함께 수집하고 학습 데이터 구성을 반복했다.',
-      'Imitation Learning 모델 학습과 폐루프 주행 검증을 수행했다.',
-      '실행 환경에 따른 steering update frequency 차이와 실패 구간을 분석했다.',
-      '학습 기반 주행과 신호등·어린이보호구역 Rule-based mission을 최종 실행 구성으로 통합했다.',
+      '전체 Imitation Learning 주행 시스템, camera/keyboard steering 데이터 수집, preprocessing, Behavioral Cloning 학습과 real-time inference pipeline을 직접 구성했다.',
+      '실차 steering control node와 learned steering, Rule-based mission logic, 최종 launch/driving stack을 통합했다.',
+      '폐루프 실차 주행을 반복 검증하고 실패 구간·데이터 분포·제어 주기와 차량 반응을 분석해 재수집과 재학습, 시스템 tuning을 수행했다.',
+      '대회 준비 후반 고속 주행용 추가 데이터 수집에서는 팀원들의 지원을 받았다.',
     ],
     problem: {
       label: 'Project Goal',
       title: '이전 Hybrid 프로젝트에서 steer-only Imitation Learning의 가능성을 확인한 뒤, 사람이 직접 주행해 수집한 데이터를 이용해 직선·곡선 주행뿐 아니라 장애물·보행자 회피까지 학습 모델이 수행하도록 확장하는 것을 목표로 했다.',
     },
     sections: [
+      {
+        label: 'Individual Implementation',
+        title: '전체 학습 기반 주행 시스템을 직접 설계·구현',
+        items: [
+          'camera와 keyboard steering label을 기록하는 구조부터 dataset preprocessing, Behavioral Cloning 학습, 실시간 inference와 실차 steering control까지 전체 주행 pipeline을 직접 구성했다.',
+          'learned steering을 신호등·어린이보호구역 등 Rule-based mission logic과 통합하고, 최종 예선용 launch와 driving stack을 구성했다.',
+          '대회 준비 후반에는 고속 주행 상황의 학습 데이터를 보완하기 위해 팀원들이 추가 데이터 수집을 지원했다.',
+        ],
+      },
       {
         label: 'Approach',
         title: '사람이 직접 주행해 수집한 데이터를 학습에 사용',
