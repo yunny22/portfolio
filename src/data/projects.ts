@@ -189,7 +189,7 @@ const projectEntries: Project[] = [
     kind: 'engineering',
     category: 'Learning-based Autonomous Driving',
     featured: true,
-    summary: 'Taeyun Kim이 직접 설계·구현한 Imitation Learning 주행 시스템으로, 사람이 직접 주행해 수집한 데이터로 직선·곡선에서 장애물·보행자 회피까지 학습 범위를 확장하고 폐루프 주행에서 control frequency와 데이터 구성이 미치는 영향을 확인한 프로젝트다.',
+    summary: '사람이 직접 주행해 수집한 데이터로 직선·곡선에서 장애물·보행자 회피까지 학습 범위를 확장하고 폐루프 주행에서 control frequency와 데이터 구성이 미치는 영향을 확인한 프로젝트다.',
     problem: {
       label: 'Project Goal',
       title: '이전 Hybrid 프로젝트에서 steer-only Imitation Learning의 가능성을 확인한 뒤, 사람이 직접 주행해 수집한 데이터를 이용해 직선·곡선 주행뿐 아니라 장애물·보행자 회피까지 학습 모델이 수행하도록 확장하는 것을 목표로 했다.',
@@ -275,7 +275,7 @@ const projectEntries: Project[] = [
     kind: 'research',
     category: 'Learning-based Autonomous Driving',
     featured: true,
-    summary: 'Taeyun Kim이 단독으로 수행한 연구 프로젝트로, 예선 Imitation Learning의 고속 oscillation을 개선하기 위해 Reinforcement Learning과 Gazebo 기반 Sim-to-Real을 시도하고 고속 주행에서 남은 물리적 차이를 분석했다.',
+    summary: '예선 Imitation Learning의 고속 oscillation을 개선하기 위해 Reinforcement Learning과 Gazebo 기반 Sim-to-Real을 시도하고 고속 주행에서 남은 물리적 차이를 분석한 연구 프로젝트다.',
     problem: {
       label: 'Project Goal',
       title: '예선 Imitation Learning에서 고속 주행 시 발생한 좌우 oscillation을 개선하기 위해 Reinforcement Learning을 시도하고, 반복 학습을 위한 simulation과 실차 이전 구조를 구축하는 것을 목표로 했다.',
