@@ -1,6 +1,8 @@
 # Taeyun Kim · Autonomous Driving Research Portfolio
 
-학습 기반 자율주행, Sim-to-Real, 실차 자율주행 및 V2I 협력주행 연구 경험을 정리한 포트폴리오입니다.
+카메라 기반 주행 정책은 외란 뒤에 어떻게 복구하며, 시뮬레이션에서 학습한 정책은 실제 차량에서도 같은 궤적을 유지할 수 있을까요? 국민대 대회에서 실패 구간의 데이터를 다시 수집하고 고속 실차 주행의 한계를 경험하며 갖게 된 질문입니다.
+
+[포트폴리오 열기](https://yunny22.github.io/portfolio/) · [연구 질문과 실험 기록](https://yunny22.github.io/portfolio/#research-focus) · [CNN·Transformer 학습 기록](https://yunny22.github.io/portfolio/#coursework)
 
 이 사이트는 [Astro](https://astro.build/)로 만든 정적 웹사이트입니다. 프로젝트별 문제, 개인 기여, 구현 과정, 실험 결과와 한계를 이미지·영상 근거와 함께 보여줍니다.
 
