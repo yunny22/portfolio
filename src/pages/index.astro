@@ -75,6 +75,33 @@ const researchFocus = [
     </div>
   </section>
 
+  <section class="section" id="coursework" aria-labelledby="coursework-heading">
+    <div class="shell">
+      <header class="section-heading reveal">
+        <div><p class="eyebrow">Coursework</p><h2 id="coursework-heading">전공 수업</h2></div>
+      </header>
+      <div class="course-grid">
+        <article class="course-card reveal">
+          <h3>인공지능 응용</h3>
+          <p>합성 도로 이미지로 조향을 예측하는 모델을 학습하고, 모델의 조향이 다음 입력을 바꾸는 폐루프 주행에서 오차가 어떻게 누적되는지 확인했다.</p>
+          <p>DAgger 실습에서는 기존 정책과 학습 단계별 정책 11개를 공개·미공개 트랙과 두 외란 강도에서 비교했다. 조건별로 같은 시드 5개를 사용해 총 220회 평가했고, 네 조건 평균 87.59점인 D8을 제출 모델로 골랐다.</p>
+          <p>어텐션 실습에서는 PilotNet과 CNN에 어텐션을 추가한 모델이 기본 조건에서 모두 완주했지만, 강한 외란에서는 세 트랙 모두에서 이탈했다.</p>
+          <div class="course-links">
+            <a href="https://github.com/yunny22/AI-applications">주차별 실습 코드 ↗</a>
+            <a href="https://github.com/yunny22/AI-applications/tree/main/week07">정책 평가 기록 ↗</a>
+            <a href="https://github.com/yunny22/AI-applications/tree/main/week12">어텐션 비교 ↗</a>
+          </div>
+        </article>
+        <article class="course-card reveal">
+          <h3>거대언어모델</h3>
+          <p>Transformer를 중심으로 딥러닝 모델의 구조와 학습 원리를 공부했다. 문장이 토큰으로 나뉘고, 각 토큰의 임베딩이 층을 거치면서 문맥을 반영하는 과정을 따라갔다.</p>
+          <p>셀프 어텐션에서 Query와 Key의 내적으로 가중치를 구해 Value를 결합하는 과정을 정리했다. 이어 잔차 연결이 층 사이에서 정보를 전달하는 방식과 정규화가 깊은 신경망의 학습에 미치는 영향을 살펴봤다.</p>
+          <p>사전학습에서는 데이터의 구성과 품질, 옵티마이저, 혼합 정밀도가 학습에 미치는 영향을 공부했다. 인공지능 응용 실습에서는 같은 어텐션 원리가 도로 이미지의 위치별 특징을 조향 예측에 결합하는 데 쓰이는 사례를 분석했다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="section journey" id="research-journey">
     <div class="shell">
       <header class="section-heading reveal">
@@ -145,6 +172,12 @@ const researchFocus = [
   .focus-card h3 { min-height: 4.5rem; margin: 1.8rem 0 1.2rem; font-size: clamp(1.35rem,2.2vw,1.85rem); }
   .focus-card ul { margin: 0; padding: 0; list-style: none; color: var(--muted); }
   .focus-card li { padding: .45rem 0; border-top: 1px solid var(--line); }
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,22rem),1fr)); gap: 1.5rem; }
+  .course-card { padding: clamp(1.25rem,3vw,2rem); border-top: 3px solid var(--green-deep); background: #fff; }
+  .course-card h3 { margin: 0 0 1.2rem; font-size: 1.6rem; }
+  .course-card p { line-height: 1.8; }
+  .course-links { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+  .course-links a { color: var(--green-deep); text-decoration: underline; text-underline-offset: .2em; }
   .featured { background: var(--paper); }
   .project-list { display: grid; grid-template-columns: 1fr; }
   .all-projects { display: flex; justify-content: flex-end; margin-top: 2rem; }
