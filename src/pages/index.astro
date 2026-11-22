@@ -10,12 +10,12 @@ const base = import.meta.env.BASE_URL;
   <section class="hero" id="home">
     <div class="shell hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow reveal">Autonomous Driving Research Portfolio</p>
+        <p class="eyebrow reveal">Autonomous Driving Portfolio</p>
         <h1 class="reveal">Taeyun Kim</h1>
         <p class="affiliation reveal">Konkuk University · Smart Vehicle Engineering · 3rd Year</p>
         <p class="hero-intro reveal">
-          카메라 기반 모방학습(BC)과 오프라인 강화학습(TD3+BC)을 직접 적용해 보고, Sim-to-Real 실험과 실차 자율주행 시스템 통합, 주행 로그 분석을 경험했습니다.<br />
-          앞으로는 시뮬레이션과 실제 차량 사이의 차이를 줄이는 방법을 더 살펴보고, V2I와 다중 모달 정보를 활용한 E2E 자율주행을 구현해 보고 싶습니다.
+          카메라 기반 모방학습(BC)과 오프라인 강화학습(TD3+BC), Sim-to-Real을 직접 다뤄봤습니다. 실차 자율주행 시스템을 통합하고 주행 로그로 제어 문제를 분석하는 작업도 했습니다.<br />
+          시뮬레이션에서 잘 움직이던 정책이 실제 차량에서는 왜 다르게 동작하는지에 관심이 있습니다. 앞으로 이런 차이를 줄이고, V2I 정보를 활용한 E2E 주행을 구현해 보고 싶습니다.
         </p>
         <div class="hero-actions reveal">
           <a class="button button--accent" href="#featured-projects">대표 프로젝트 ↓</a>
@@ -45,19 +45,19 @@ const base = import.meta.env.BASE_URL;
     <div class="shell">
       <header class="section-heading reveal">
         <div><p class="eyebrow">Selected Coursework</p><h2>관심 수강과목</h2></div>
-        <p>자율주행 프로젝트에 적용한 학습 방법과 모델의 기본 구조를 이해하기 위해 공부한 과목입니다.</p>
+        <p>프로젝트를 진행하면서 함께 공부한 인공지능 관련 과목을 정리했습니다.</p>
       </header>
       <div class="course-grid">
         <article class="course-card reveal">
           <span class="mono course-index">01 · AI Applications</span>
           <h3>인공지능응용</h3>
-          <p>CNN을 비롯한 학습 모델의 기본 구조를 익히고, 모방학습과 DAgger를 실습하면서 데이터 수집·학습·폐루프 평가를 연결해 보았습니다.</p>
+          <p>CNN과 모방학습, DAgger를 실습했습니다. 직접 데이터를 모으고 모델을 학습시킨 뒤 폐루프에서 평가하는 과정까지 경험했습니다.</p>
           <a href="https://github.com/yunny22/AI-applications" target="_blank" rel="noreferrer">수업 실습 기록 보기 ↗</a>
         </article>
         <article class="course-card reveal">
           <span class="mono course-index">02 · Large Language Models</span>
           <h3>거대언어모델</h3>
-          <p>토큰화·임베딩과 Q·K·V Attention, Transformer 블록부터 BERT·GPT 계열 구조, RoPE와 MoE까지 학습하며 언어모델의 동작 원리를 정리했습니다.</p>
+          <p>토큰화와 임베딩, Attention과 Transformer 구조를 공부했습니다. BERT·GPT 계열 모델과 RoPE, MoE를 비교하면서 언어모델이 작동하는 방식을 정리했습니다.</p>
           <span class="course-footnote">주요 학습 내용 요약</span>
         </article>
       </div>
@@ -67,7 +67,7 @@ const base = import.meta.env.BASE_URL;
   <section class="section journey" id="research-journey">
     <div class="shell">
       <header class="section-heading reveal">
-        <div><p class="eyebrow">Research Journey</p><h2>관심의 발전 과정</h2></div>
+        <div><p class="eyebrow">Research Journey</p><h2>진행해 온 흐름</h2></div>
       </header>
       <ol class="journey-list">
         {researchJourney.map((item, index) => (
