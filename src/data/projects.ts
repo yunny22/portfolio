@@ -516,7 +516,7 @@ const projectEntries: Project[] = [
       { label: 'Problem Scenario', title: '주정차 차량 뒤 사각지대 보행자 상황', wide: true, items: ["동일한 직선 주행 상황에서 주정차 차량 뒤에 보행자가 가려져 있을 때 차량 카메라만 사용하는 정책과 노변 카메라의 V2I 정보를 추가한 정책을 비교하도록 설계했습니다."] },
       { label: 'Policy A vs B', title: '종방향 정책 A/B 비교 설계', tone: 'focus', items: ["정책 A(차량 관측)는 전방 RGB 영상과 실측 차속만 입력받아 목표속도를 예측하도록 설계했습니다.", "정책 B(노변 정보 추가)는 동일한 구조에 보행자 상대 위치·속도, 탐지 신뢰도, 메시지 경과시간·유효 여부를 함께 입력받아 목표속도를 예측하도록 설계했습니다.", "두 정책의 하위 제어(직선 경로 유지, 속도 추종기, 안전감독 모듈)는 동일하게 고정해 V2I 정보의 영향을 분리해 비교할 계획입니다."] },
       { label: 'Lightweight V2I Design', title: 'UniV2X 참고한 경량 상태 벡터 구조', items: ["UniV2X의 차량·인프라 융합 방식을 참고하되 통신 지연과 대역폭 제약을 고려해 인프라의 원본 영상 대신 보행자 상태 벡터만 전달하고, 정책 출력도 목표속도로 한정했습니다."] },
-      { label: 'Current Progress', title: '현재 진행 단계 (설계 완료)', tone: 'limit', items: ["실험 시나리오와 A/B 정책의 입출력 인터페이스, 주요 평가 지표를 확정했습니다.", "현재 CNN 백본과 시계열 입력 구성을 검토하고 있으며, 다음 단계에서 데이터 수집과 제동 성능 비교 실험을 진행할 예정입니다."] },
+      { label: 'Current Progress', title: '현재 진행 단계 (설계 완료)', tone: 'limit', items: ["실험 시나리오와 A/B 정책의 입출력 인터페이스, 주요 평가 지표를 확정했습니다."] },
     ],
     tags: ['V2I', 'End-to-End Driving', 'Occlusion', 'Infrastructure Camera'],
     accent: 'violet',
