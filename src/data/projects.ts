@@ -8,7 +8,7 @@ export type ProjectCategory =
 
 export type Metric = { value: string; label: string };
 export type ProjectMedia = {
-  type: 'image' | 'video';
+  type: 'image' | 'video' | 'embed';
   src: string;
   poster?: string;
   alt: string;
@@ -455,6 +455,7 @@ const projectEntries: Project[] = [
     media: [
       { type: 'image', src: 'media/projects/kai-steering-error.jpg', alt: '10월 17일 직선에서 보정 전후의 진행거리별 경로 오차와 분포', caption: '10월 17일 ROS 2 주행 로그 · 같은 속도대의 공통 직선 246m에서 평균 절대 경로 오차 57.07 → 19.55cm', fit: 'contain' },
       { type: 'video', src: 'media/projects/kai-gazebo-drive.mp4', poster: 'media/projects/kai-gazebo-drive-poster.jpg', alt: 'KAI Gazebo 통합 주행 시험', caption: 'KAI 통합 주행 · RViz 경로 상태와 Gazebo 차량 거동 동시에 검증' },
+      { type: 'embed', src: 'https://drive.google.com/file/d/1NldNiUlET7BHCehUOvWPRHPefprOieol/view?usp=drivesdk', alt: '2026 AI·SW 모빌리티 경진대회 K.A.I. 주행 시각화 및 실차 기록 영상', caption: 'K.A.I. 대회 주행 영상 · 주행 시각화와 실차 주행 장면', fit: 'contain' },
     ],
     accent: 'cyan',
   },
@@ -526,7 +527,7 @@ const projectEntries: Project[] = [
     status: 'Completed',
     kind: 'engineering',
     category: 'Autonomous Driving Systems',
-    featured: true,
+    featured: false,
     summary: '2026 HL만도 자율주행 모빌리티 경진대회(HL FMA) 1/5 스케일 부문에서 장려상을 수상했습니다. Henes T8 Sports 실차의 전체 SW 아키텍처를 설계하고, Dual RTK GNSS·Spline 스무딩·Pure Pursuit 기반 경로 추종 및 장애물 구간 주행을 구현했습니다.',
     problem: { label: 'Project Goal', title: '실제 차량에서 위치·heading·speed를 이용해 전역 경로를 기록하고, 스무딩된 경로를 안정적으로 추종하는 실차 자율주행 시스템을 구현하는 것을 목표로 했습니다.' },
     sections: [
