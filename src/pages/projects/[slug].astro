@@ -120,7 +120,7 @@ const kindLabels = {
                     <figure class:list={['media-item', `media-item--${item.fit ?? 'cover'}`]}>
                       {item.type === 'embed' ? (
                         <div class="media-card media-card--embed">
-                          <iframe src={src.replace(/\\/view(?:\\?.*)?$/, '/preview')} title={item.alt} loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                          <iframe src={src.replace('/view?usp=drivesdk', '/preview')} title={item.alt} loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                         </div>
                       ) : (
                         <button
