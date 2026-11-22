@@ -7,18 +7,21 @@ const base = import.meta.env.BASE_URL;
 const researchFocus = [
   {
     title: '실패 구간의 데이터를 어떻게 보완할까?',
-    text: '국민대 예선에서 곡선과 장애물 회피에 실패한 구간을 다시 주행해 학습 데이터를 보완했다. 같은 모델도 조향 갱신 주기가 약 9~10Hz 사이에서 달라지면 고속 궤적이 달라졌다. 데이터 분포와 제어 주기의 영향을 따로 비교하고 싶다.',
-    slug: 'kookmin-preliminary', link: '모방학습과 예선 주행 기록',
+    text: '국민대 예선에서 곡선 진입과 장애물 회피가 흔들리는 구간의 시연 데이터를 집중적으로 다시 수집해 폐루프 안정성을 높였습니다. 동일한 모델이라도 실행 환경에 따라 조향 갱신 주기가 9~10Hz 수준으로 달라지면 고속 궤적이 흔들리는 한계를 확인했습니다.',
+    slug: 'kookmin-preliminary',
+    link: '모방학습과 예선 주행 기록',
   },
   {
     title: '저속에서 성공한 정책이 고속에서 왜 흔들릴까?',
-    text: 'Gazebo에서 BC와 TD3+BC 정책을 평가하고 실차 저속 주행을 확인했다. 카메라 영상을 같은 형식으로 바꾸고 지연을 보정한 뒤에도 고속에서는 흔들림이 남았다. 속도를 나누어 비교하며 지연과 차량 거동이 복구 성능에 미치는 영향을 확인하고 싶다.',
-    slug: 'sim-to-real-driving', link: '시뮬레이션과 실차 비교',
+    text: 'Gazebo 환경에서 정준(Canonical) BEV 차선 표현 기반의 BC와 오프라인 RL(TD3+BC) 정책을 검증하고 1/10 실차 저속 주행에 성공했습니다. 센서·제어 지연을 반영한 뒤에도 고속에서는 좌우 진동이 남았으며, 타이어–노면 마찰과 동역학 차이를 분석하고 있습니다.',
+    slug: 'sim-to-real-driving',
+    link: '시뮬레이션과 실차 비교',
   },
   {
-    title: '차량에 보이지 않는 보행자에게 더 일찍 반응할 수 있을까?',
-    text: '주차 차량 뒤에서 보행자가 나오는 상황을 대상으로 비교 실험을 설계 중이다. 같은 시나리오에서 전방 카메라만 사용하는 정책과 인프라가 보낸 보행자 위치를 함께 쓰는 정책의 최초 감속 시점, 최소 거리, 충돌 여부를 비교할 계획이다.',
-    slug: 'v2i-cooperative-e2e', link: 'V2I 비교 실험 설계',
+    title: '차량 시야 밖 보행자 정보를 더하면 감속 시점이 앞당겨질까?',
+    text: '주정차 차량 뒤에 가려진 보행자를 노변 카메라로 먼저 감지해 V2I로 전달하는 종방향 E2E 정책을 설계하고 있습니다. 전방 영상·차속만 쓰는 기준 정책(A)과 보행자 상대 위치·속도 벡터를 결합한 정책(B)의 감속 시점과 최소 여유 거리를 비교할 계획입니다.',
+    slug: 'v2i-cooperative-e2e',
+    link: 'V2I 비교 실험 설계',
   },
 ];
 ---
@@ -31,13 +34,12 @@ const researchFocus = [
         <h1 class="reveal">Taeyun Kim</h1>
         <p class="affiliation reveal">Konkuk University · Smart Vehicle Engineering · 3rd Year</p>
         <p class="hero-intro reveal">
-          카메라로 조향을 학습한 차량은 어디까지 스스로 실수를 복구할 수 있을까요?<br />
-          모방학습 주행에서 실패한 장면을 다시 수집하고, 시뮬레이션에서 학습한 정책을 실차로 옮기며 이 질문을 갖게 됐습니다.
-          특히 데이터의 구성과 차량의 응답 지연이 폐루프 주행에 미치는 영향에 관심이 있습니다.
+          카메라 기반 모방학습(BC)과 오프라인 강화학습(TD3+BC), Sim-to-Real, 그리고 실차 자율주행 시스템 통합과 주행 로그 분석을 중심으로 연구하고 있습니다.<br />
+          시뮬레이션과 실제 차량 사이의 간극을 줄이고, V2I 및 다중 모달 입력을 주행 행동으로 연결하는 E2E 자율주행으로 연구를 확장하고 있습니다.
         </p>
         <div class="hero-actions reveal">
           <a class="button button--accent" href="#featured-projects">대표 프로젝트 ↓</a>
-          <a class="button button--ghost" href="#coursework">CNN · Transformer 학습 기록 ↓</a>
+          <a class="button button--ghost" href={`${base}grades/`}>학업 및 수강 과목 →</a>
         </div>
       </div>
       <figure class="hero-visual reveal">
@@ -50,7 +52,7 @@ const researchFocus = [
     <div class="shell">
       <header class="section-heading reveal">
         <div><p class="eyebrow">Research Focus</p><h2>주행 실험에서 생긴 연구 질문</h2></div>
-        <p>AVE Lab의 데이터 중심 E2E 주행 연구에서 관심을 둔 부분은 학습 데이터에 어떤 실패 장면을 담을 것인가이다. 내가 겪은 고속 주행과 회피 실패를 출발점으로, 같은 조건을 반복하는 폐루프 평가에서 그 효과를 살펴보고 싶다.</p>
+        <p>모방학습 주행에서 실패 장면을 다시 수집하고, 시뮬레이션 정책을 실차로 옮기며 마주한 문제들을 중심으로 폐루프 주행 안정성과 V2I 협력 주행을 탐구하고 있습니다.</p>
       </header>
       <div class="focus-grid">
         {researchFocus.map((focus) => (
@@ -73,38 +75,6 @@ const researchFocus = [
         {featuredProjects.map((project, index) => <ProjectCard project={project} index={index} />)}
       </div>
       <div class="all-projects reveal"><a class="button button--ghost" href={`${base}projects/`}>View All {projects.length} Projects →</a></div>
-    </div>
-  </section>
-
-  <section class="section" id="coursework" aria-labelledby="coursework-heading">
-    <div class="shell">
-      <header class="section-heading reveal">
-        <div><p class="eyebrow">Coursework</p><h2 id="coursework-heading">딥러닝 기초와 주행 실험</h2></div>
-      </header>
-      <div class="course-grid">
-        <article class="course-card reveal">
-          <h3>인공지능 응용 · CNN과 폐루프 평가</h3>
-          <p>PilotNet 계열 CNN은 같은 필터를 이미지 여러 위치에 적용해 도로의 국소 특징을 추출하고, 이를 조합해 조향값 하나를 예측한다. 합성 도로에서 모델의 조향이 다음 프레임을 바꾸도록 주행시켜 작은 오차가 누적되는 과정을 확인했다.</p>
-          <p>DAgger 실습에서는 기존 정책과 학습 단계별 정책 11개를 공개·미공개 트랙과 두 외란 강도에서 비교했다. 조건별로 같은 시드 5개를 사용해 총 220회 평가했고, 네 조건 평균 87.59점인 D8을 제출 모델로 골랐다.</p>
-          <p>어텐션 실습에서는 PilotNet과 CNN에 어텐션을 추가한 모델이 기본 조건에서 모두 완주했지만, 강한 외란에서는 세 트랙 모두에서 이탈했다.</p>
-          <div class="course-links">
-            <a href="https://github.com/yunny22/AI-applications">주차별 실습 코드 ↗</a>
-            <a href="https://github.com/yunny22/AI-applications/tree/main/week07">정책 평가 기록 ↗</a>
-            <a href="https://github.com/yunny22/AI-applications/tree/main/week12">어텐션 비교 ↗</a>
-          </div>
-        </article>
-        <article class="course-card reveal">
-          <h3>거대언어모델 · Transformer의 학습 원리</h3>
-          <p>Transformer를 중심으로 딥러닝 모델의 구조와 학습 원리를 공부했다. 문장이 토큰으로 나뉘고, 각 토큰의 임베딩이 층을 거치면서 문맥을 반영하는 과정을 따라갔다.</p>
-          <p>셀프 어텐션에서 Query와 Key의 내적을 차원에 맞게 조정하고 softmax로 가중치를 구해 Value를 결합하는 과정을 정리했다. 이어 잔차 연결이 층 사이에서 정보를 전달하는 방식과 정규화가 깊은 신경망의 학습에 미치는 영향을 살펴봤다.</p>
-          <p>사전학습에서는 데이터의 구성과 품질, 옵티마이저, 혼합 정밀도가 학습에 미치는 영향을 공부했다. 인공지능 응용 실습에서는 같은 어텐션 원리가 도로 이미지의 위치별 특징을 조향 예측에 결합하는 데 쓰이는 사례를 분석했다.</p>
-        </article>
-      </div>
-      <aside class="reading reveal">
-        <h3>다음에 살펴볼 모델 · Hydra-MDP</h3>
-        <p>내 실습 모델은 한 시점의 조향값을 예측했다. Hydra-MDP는 여러 후보 궤적을 평가해 주행 계획을 선택한다. 같은 장애물 장면에서 즉시 조향을 예측할 때와 앞으로의 궤적을 비교할 때, 충돌 가능성과 주행 진척도를 판단하는 시점이 어떻게 달라지는지 살펴보고 싶다.</p>
-        <a href="https://github.com/NVlabs/Hydra-MDP">연구팀의 모델과 코드 ↗</a>
-      </aside>
     </div>
   </section>
 
@@ -174,19 +144,11 @@ const researchFocus = [
   .focus { background: #fff; }
   .focus-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
   .focus-card { min-height: 19rem; padding: 1.6rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #f9faf7; }
-  .focus-card p, .reading p { line-height: 1.8; }
-  .focus-card a, .reading a { color: var(--green-deep); text-decoration: underline; text-underline-offset: .2em; }
-  .reading { margin-top: 2rem; padding: 1.4rem; border-left: 3px solid var(--green); background: #edf4ef; }
-  .reading h3 { margin-top: 0; }
+  .focus-card p { line-height: 1.8; }
+  .focus-card a { color: var(--green-deep); text-decoration: underline; text-underline-offset: .2em; }
   .focus-card h3 { min-height: 4.5rem; margin: .4rem 0 1.2rem; font-size: clamp(1.35rem,2.2vw,1.85rem); }
   .focus-card ul { margin: 0; padding: 0; list-style: none; color: var(--muted); }
   .focus-card li { padding: .45rem 0; border-top: 1px solid var(--line); }
-  .course-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,22rem),1fr)); gap: 1.5rem; }
-  .course-card { padding: clamp(1.25rem,3vw,2rem); border-top: 3px solid var(--green-deep); background: #fff; }
-  .course-card h3 { margin: 0 0 1.2rem; font-size: 1.6rem; }
-  .course-card p { line-height: 1.8; }
-  .course-links { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
-  .course-links a { color: var(--green-deep); text-decoration: underline; text-underline-offset: .2em; }
   .featured { background: var(--paper); }
   .project-list { display: grid; grid-template-columns: 1fr; }
   .all-projects { display: flex; justify-content: flex-end; margin-top: 2rem; }
