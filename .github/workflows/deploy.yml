@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+# Serialize deployments so rapid commits cannot create competing Pages deployments.
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
 permissions:
   contents: read
   pages: write
